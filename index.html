@@ -98,7 +98,7 @@
       <!-- form -->
       <section class="six columns half form">
         <h1>線上功德登記-07-Mar-2022</h1>
-        <form>
+        <form id="myform">
           <!-- 姓名 -->
           <div class="input-group">
             <label for="demo_name">姓名</label>
@@ -163,6 +163,7 @@
           dataType: 'jsonp',
           complete: function() {
             alert('資料已送出！');
+            $("#myform")[0].reset();
           }
         });
         
