@@ -18,3 +18,8 @@
 [google excel](https://docs.google.com/spreadsheets/d/16i325AVb4OyxzpwN19bApARWNdi96qQMb3WhIEDmxeA/edit?resourcekey#gid=955154748/edit)
 
 
+[let write google excel](https://docs.google.com/spreadsheets/d/15QiZEKyMMmpbj7cvJ_fPX5Eh1x9BzXOtfONFIM2V64o/edit#gid=1662192619)
+
+
+
+
