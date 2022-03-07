@@ -6,7 +6,7 @@
 
 
 ### 測試頁面：
-<https://kht2022.github.io/customize-google-form/>
+<https://kht2022.github.io/custom-google-form/>
 
 
 ---
