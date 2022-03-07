@@ -175,13 +175,20 @@
       $(document).ready(function() {
           $('input[type="checkbox"]').click(function() {
               if($(this).is(":checked")) {
-		      alert($(this).val());
-ttl = ttl + parseInt($(this).val());
-$('#total').text(ttl);
+		 let text =  $(this).val();
+		 let start = text.indexOf('HK$') + 3;
+		 let end = text.indexOf(')');
+                 let num = text.substring(start, end);	      
+		 ttl = ttl + parseInt(num);
+		 $('#total').text(ttl);
               }
-              else if($(this).is(":not(:checked)")) {
-ttl = ttl - parseInt($(this).val());
-$('#total').text(ttl);
+              else if($(this).is(":not(:checked)")) {		      
+		 let text =  $(this).val();
+		 let start = text.indexOf('HK$') + 3;
+		 let end = text.indexOf(')');
+                 let num = text.substring(start, end);	      
+		 ttl = ttl - parseInt(num);
+		 $('#total').text(ttl);
               }
             });
         });
