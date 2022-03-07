@@ -142,7 +142,7 @@
           });
           return v;
         };
-		//alert(cb());
+		alert(cb());
         // 類別
         var totall = $('#total').val() || '未填寫';
      		//alert(totall);
@@ -175,6 +175,7 @@
       $(document).ready(function() {
           $('input[type="checkbox"]').click(function() {
               if($(this).is(":checked")) {
+		      alert($(this).val());
 ttl = ttl + parseInt($(this).val());
 $('#total').text(ttl);
               }
