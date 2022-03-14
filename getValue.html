@@ -35,7 +35,7 @@ var xmlhttp;
                         }
                         html+="</table>";
                       */  
-                        document.getElementById("order_status").innerHTML=html;
+                        document.getElementById("ttl").innerHTML="總功德數目 : " + html;
                         if(html.length==0) //只有一筆代表查不到資料
                                 alert('查無資料');
                   }
@@ -50,9 +50,6 @@ var xmlhttp;
 </head>
 <body onload="showHint(11)">
 
-輸入購買者身分證號：<input type="text" id="uid" />
-<input type="button" name="inq" value="查詢" onclick="showHint(uid.value);"></br>
-
-<span id="order_status"></span>
+<span id="ttl"></span>
 </body>
 </html>
