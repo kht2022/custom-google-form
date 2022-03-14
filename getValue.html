@@ -36,7 +36,7 @@ var xmlhttp;
                         html+="</table>";
                       */  
                         document.getElementById("order_status").innerHTML=html;
-                        if(obj.length==1) //只有一筆代表查不到資料
+                        if(html.length==0) //只有一筆代表查不到資料
                                 alert('查無資料');
                   }
 
