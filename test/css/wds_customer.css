@@ -1,0 +1,174 @@
+@charset "utf-8";
+/* CSS Document */
+body {
+	/*background-color: #eee;*/
+	/*background-color: #ffffff;*/
+	background-image: url("../images/overlay.png"), -moz-linear-gradient(60deg, rgba(255, 136, 0, 0.5) 5%, rgba(255, 255, 255, 0.35)), url("../images/bg.jpg");
+	background-image: url("../images/overlay.png"), -webkit-linear-gradient(60deg, rgba(255, 136, 0, 0.5)) 5%, rgba(255, 255, 255, 0.35), url("../images/bg.jpg");
+	background-image: url("../images/overlay.png"), -ms-linear-gradient(60deg, rgba(255, 136, 0, 0.5)) 5%, rgba(255, 255, 255, 0.35), url("../images/bg.jpg");
+	background-image: url("../images/overlay.png"), linear-gradient(60deg, rgba(255, 136, 0, 0.5) 5%, rgba(255, 255, 255, 0.35)), url("../images/bg.jpg");
+	background-repeat: repeat,			no-repeat,			no-repeat;
+	background-size: 100px 100px, cover,				cover;
+	background-position: top left,		center center,		bottom center;
+	background-attachment: fixed,			fixed,				fixed;
+	/*min-width: 420px;*/
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff8800', endColorstr='#ffffff',GradientType=1 ); /* IE6-9 */
+}
+/* Remove the navbar's default rounded borders and increase the bottom margin */ 
+.navbar {
+	border-radius: 0;
+}
+    
+/* Remove the jumbotron's default bottom margin */ 
+.jumbotron {
+	margin-bottom: 0;
+	background-color: #FFFAFA;
+	padding-top: 0;
+	padding-bottom: 0;
+}
+	
+.item_title {
+	color: #FFFFFF;
+	font-weight: bold;
+	font-size: large;
+	font-family: 微軟正黑體;
+}
+
+.alert_bar_content {
+	font-weight: bold;
+	font-size: large;
+	font-family: 微軟正黑體;
+}
+	
+.text_style {
+	font-size:16px;
+}
+	
+.input-group {
+	width: 100% !important;
+}
+   	
+/* Add a gray background color and some padding to the footer */
+footer {
+	/*background-color: #ffffff;*/
+	padding: 25px;
+}
+
+.navbar-default {
+	background-color: #e67e22;
+	border-color: #d35400;
+}
+
+.navbar-default .navbar-brand {
+	color: #ecf0f1;
+}
+
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+	color: #ffe6d1;
+}
+
+.navbar-default .navbar-text {
+	color: #ecf0f1;
+}
+
+.navbar-default .navbar-nav > li > a {
+	color: #ecf0f1;
+}
+
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+	color: #ffe6d1;
+}
+
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+	color: #ffe6d1;
+	background-color: #d35400;
+}
+
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus {
+	color: #ffe6d1;
+	background-color: #d35400;
+}
+
+.navbar-default .navbar-toggle {
+	border-color: #d35400;
+}
+
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+	background-color: #d35400;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+	background-color: #ecf0f1;
+}
+
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+	border-color: #ecf0f1;
+}
+.navbar-default .navbar-link {
+	color: #ecf0f1;
+}
+
+.navbar-default .navbar-link:hover {
+	color: #ffe6d1;
+}
+
+@media (max-width: 767px) {
+	.navbar-default .navbar-nav .open .dropdown-menu > li > a {
+		color: #ecf0f1;
+	}
+	
+	.navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+	.navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+		color: #ffe6d1;
+	}
+	.navbar-default .navbar-nav .open .dropdown-menu > .active > a,
+	.navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
+	.navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+		color: #ffe6d1;
+		background-color: #d35400;
+	}
+}
+	
+.panel-default > .panel-heading {
+	background-color: #d35400;
+}
+	
+.jumbotron > .container{
+	/*margin-top: -50px;*/
+	width: 80%;
+}
+
+.panel-primary > .panel-heading, .label-primary{
+	background-color: #595758;
+}
+
+.panel-primary{
+	border-color: #595758;
+}
+
+.label-warning{
+	background-color: #d25400;
+}
+
+.glyphicon-plus{
+	border-color: #9a9693;
+	background-color: #9a9693;
+}
+
+.glyphicon-minus{
+	border-color: #d0cfcb;
+	background-color: #d0cfcb;
+}
+
+.label-info{
+	border-color: #ffebd2;
+	background-color: #ffebd2;
+}
