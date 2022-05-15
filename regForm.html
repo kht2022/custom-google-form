@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <head>
+    <title>佛光山佛香講堂-孝道月梁皇法會(一)功德線上登記</title>
+	<style>
+	.collapsible {
+		background-color: #777;
+		color: white;
+		cursor: pointer;
+		padding: 18px;
+		width: 100%;
+		border: none;
+		text-align: left;
+		outline: none;
+		font-size: 15px;
+	}
+
+	.active, .collapsible:hover {
+		background-color: #555;
+		}
+
+	.content {
+		padding: 0 18px;
+		max-height: 0;
+		overflow: hidden;
+		transition: max-height 0.2s ease-out;
+		background-color: #f1f1f1;
+	}
+	</style>
+    <script language="javascript">
+      function addRow(tableID) {
+        var table = document.getElementById(tableID);
+        var rowCount = table.rows.length;
+        if (rowCount < 4) {
+          // limit the user from creating fields more than your limits
+          var row = table.insertRow(rowCount);
+
+          var colCount = table.rows[1].cells.length;
+          row.id = "row_" + rowCount;
+          for (var i = 0; i < colCount; i++) {
+            var newcell = row.insertCell(i);
+            newcell.outerHTML = table.rows[1].cells[i].outerHTML;
+			
+          }
+          var listitems = row.querySelectorAll("input, select");
+
+          for (i = 0; i < listitems.length; i++) {
+            listitems[i].setAttribute("oninput", "calculate('" + row.id + "')");
+			listitems[7].setAttribute("onClick", "deleteF('" + row.id + "')");
+          }
+        } else {
+          alert("懺主最多登記三位");
+        }
+      }
+	  
+	  function showRow(tableID) {
+	  $("#dataTable tr").each(function(){
+        var currentRow=$(this);
+    
+         var currentRow=$(this).closest("tr"); 
+         
+         var col1=currentRow.find("td:eq(1)").text(); // get current row 1st table cell TD value
+         var col2=currentRow.find("td:eq(2)").text(); // get current row 2nd table cell TD value
+         var col3=currentRow.find("td:eq(3)").text(); // get current row 3rd table cell  TD value
+         var data=col1+"\n"+col2+"\n"+col3;
+         var sumContainer = document.getElementById("showTTT");
+
+		sumContainer.textContent = data;
+       });
+	  
+	  
+	  
+	  var table = document.getElementById(tableID);
+		var colCount = table.rows[0].cells.length;
+        for (var i = 0; i < colCount; i++) {
+         //   alert("i=" + i + ", value = " + table.rows[1].cells[i].innerHTML);	
+        }
+	  
+	  
+	  //var myBox1 = document.querySelectorAll("[name=mainName]");
+	  var myBox1 = document.querySelectorAll("[name^=sel]");
+          i;
+        var sumValue = "";
+        for (i = 0; i < myBox1.length; ++i) {
+		  if (myBox1[i].value.length > 0){
+             //alert("i=" + i + ", value = " + myBox1[i].value);	
+			 sumValue += " " + myBox1[i].value;
+		  }
+        }
+		var sumContainer = document.getElementById("showTTT");
+		sumContainer.textContent = sumValue;
+	  
+	  	var table = document.getElementById(tableID);
+		var rowCount = table.rows.length;
+		var colCount = table.rows[1].cells.length;		
+          for (var i = 0; i < colCount; i++) {            
+           // alert("i=" + i + ", value = " + table.rows[1].cells[i].value);			
+          }		
+	  }
+	  function addRow2(tableID) {
+        var table = document.getElementById(tableID);
+        var rowCount = table.rows.length;
+        if (rowCount < 6) {
+          // limit the user from creating fields more than your limits
+          var row = table.insertRow(rowCount);
+
+          var colCount = table.rows[1].cells.length;
+          row.id = "rowA_" + rowCount;
+          for (var i = 0; i < colCount; i++) {
+            var newcell = row.insertCell(i);
+            newcell.outerHTML = table.rows[1].cells[i].outerHTML;
+          }
+          var listitems = row.querySelectorAll("input, select");
+
+          for (i = 0; i < listitems.length; i++) {
+            listitems[i].setAttribute("oninput", "calculate2('" + row.id + "')");
+			listitems[7].setAttribute("onClick", "deleteF('" + row.id + "')");
+          }
+        } else {
+          alert("超薦大牌最多登記五位");
+        }
+      }
+	  
+	  function calculateOld(elementID) {
+        var mainRow = document.getElementById(elementID);
+        var myBox1 = mainRow.querySelectorAll("[name=qty]")[0].value;
+        var myBox3 = mainRow.querySelectorAll("[name^=sel]")[0].value;
+        var total = mainRow.querySelectorAll("[name=total]")[0];
+        var myResult1 = myBox1 * myBox3;
+        total.value = myResult1;
+
+        // calculate the totale of every total
+        var sumContainer = document.getElementById("totalOfTotals");
+        var totalContainers = document.querySelectorAll("[name=total]"),
+          i;
+        var sumValue = 0;
+        for (i = 0; i < totalContainers.length; ++i) {
+          sumValue += parseInt(totalContainers[i].value);
+        }
+        sumContainer.textContent = sumValue;
+      }
+	  
+	  
+      function calculateNewVersionExample(elementID) {
+        var mainRow = document.getElementById(elementID);
+        var myBox1 = mainRow.querySelectorAll("[name=mainName]")[0].value;
+		var myResult1 = 0;
+		if (myBox1.length > 0){
+		   myResult1 = 1000;
+		} else {
+		   myResult1 = 0;
+		}
+
+        // calculate the totale of every total
+        var sumContainer = document.getElementById("totalOfTotals");
+        var totalContainers = document.querySelectorAll("[name=total]"),
+          i;
+        var sumValue = 0;
+        for (i = 0; i < totalContainers.length; ++i) {
+          sumValue += parseInt(totalContainers[i].value);
+        }
+		sumContainer.textContent = Number(sumContainer.textContent) + myResult1;
+      }
+	  
+	  function calculate(elementID) {
+        var sumContainer = document.getElementById("totalOfTotals");
+		var myBox1 = document.querySelectorAll("[name=mainName]");
+          i;
+        var sumValue = 0;
+        for (i = 0; i < myBox1.length; ++i) {
+		  if (myBox1[i].value.length > 0){
+            sumValue += 1000;
+		  }
+        }
+		sumContainer.textContent = sumValue;
+      }
+	  
+     function calculate2(elementID) {
+        var sumContainer = document.getElementById("totalOfTotals2");
+		var myBox1 = document.querySelectorAll("[name=mainName2]");
+          i;
+        var sumValue = 0;
+        for (i = 0; i < myBox1.length; ++i) {
+		  if (myBox1[i].value.length > 0){
+            sumValue += 500;
+		  }
+        }
+		sumContainer.textContent = sumValue;
+      }
+	  
+	  function deleteF(elementID) {	 
+	    document.getElementById(elementID).outerHTML="";	  	  
+      }
+	</script>
+
+  </head>
+  <body>
+  <h2>佛光山佛香講堂-孝道月梁皇法會(一)功德線上登記</h2>
+  <button class="collapsible">懺主</button>
+   <div class="content">
+    <input type="button" value="+增加懺主" onClick="addRow('dataTable')" />
+         <input type="button" class="btnShow" value="Show" onClick="showRow('dataTable')" />
+    <table id="dataTable" class="form" border="1">
+      <tbody>
+       <th>
+         <label>懺主</label><br>
+         文疏姓名 (1名)
+       </th>
+       <th>
+         稱謂1
+       </th>
+       <th>
+         亡者1
+       </th>
+       <th>
+         稱謂2
+       </th>
+       <th>
+         亡者2
+       </th>
+       <th>
+         稱謂3
+       </th>
+       <th>
+         亡者3
+       </th>
+       <th>
+       </th>
+        <tr id="row_0">
+          <p>
+            <td>              
+              <input
+			    size="15"
+                type="text"
+                required="required"
+                name="mainName"
+                oninput="calculate('row_0')"
+              />
+            </td>
+            <td>              
+              <select name="sel" id="sel" oninput="calculate('row_0')" required>
+                <option value="" disabled selected>請選擇稱謂</option>
+                <option value="M">男</option>
+                <option value="F">女</option>
+                <option value="Mr">Mr</option>
+                <option value="Ms">Ms</option>
+              </select>
+            </td>		
+<!--
+            <td>          
+              <input
+                type="text"
+                required="required"
+                class="small"
+                name="name1"
+              />
+            </td>
+-->
+             <td>
+              <input
+			    size="15"
+                type="text"
+                required="required"
+                class="small"
+                name="dname1"
+              />
+            </td>
+             <td>
+              <input
+			    size="15"
+                type="text"
+                required="required"
+                class="small"
+                name="name2"
+              />
+            </td>
+             <td>
+              <input
+			    size="15"
+                type="text"
+                required="required"
+                class="small"
+                name="dname2"
+              />
+            </td>
+             <td>
+              <input
+			    size="15"
+                type="text"
+                required="required"
+                class="small"
+                name="name3"
+              />
+            </td>
+			 <td>
+              <input
+			    size="15"
+                type="text"
+                required="required"
+                class="small"
+                name="dname3"
+              />
+            </td>
+			 <td>
+			  <input
+                type="button"
+				value="x"
+                required="required"
+                name="btnDelete" 
+                onClick="deleteF('row_0')"				
+              />
+			 </td>			 
+          </p>
+        </tr>
+      </tbody>
+    </table>
+    <div>
+      <tr>
+        <span>懺主功德金額 HK$</span>
+        <span id="totalOfTotals">0</span><br>
+		<span id="showTTT">0</span>
+      </tr>
+    </div>
+  </div>
+  <br>
+  <button class="collapsible">超薦大牌</button>
+   <div class="content">
+    <input type="button" value="+增加超薦大牌" onClick="addRow2('dataTable2')" />
+
+    <table id="dataTable2" class="form" border="1">
+      <tbody>
+       <th>
+         <label>超薦大牌</label><br>
+         登記
+       </th>
+       <th>
+         稱謂1
+       </th>
+       <th>
+         亡者1
+       </th>
+       <th>
+         稱謂2
+       </th>
+       <th>
+         亡者2
+       </th>
+       <th>
+         稱謂3
+       </th>
+       <th>
+         亡者3
+       </th>
+       <th>
+       </th>
+        <tr id="rowA_0">
+          <p>
+            <td>              
+              <input
+			    size="15"
+                type="text"
+                required="required"
+                name="mainName2"
+                oninput="calculate2('rowA_0')"
+              />
+            </td>
+            <td>              
+              <select name="sel" id="sel" oninput="calculate2('rowA_0')" required>
+                <option value="" disabled selected>請選擇稱謂</option>
+                <option value="M">男</option>
+                <option value="F">女</option>
+                <option value="Mr">Mr</option>
+                <option value="Ms">Ms</option>
+              </select>
+            </td>		
+<!--
+            <td>          
+              <input			    
+                type="text"
+                required="required"
+                class="small"
+                name="name1"
+              />
+			  -->
+            </td>
+             <td>
+              <input
+			    size="15"
+                type="text"
+                required="required"
+                class="small"
+                name="dname1"
+              />
+            </td>
+             <td>
+              <input
+			    size="15"
+                type="text"
+                required="required"
+                class="small"
+                name="name2"
+              />
+            </td>
+             <td>
+              <input
+			    size="15"
+                type="text"
+                required="required"
+                class="small"
+                name="dname2"
+              />
+            </td>
+             <td>
+              <input
+			    size="15"
+                type="text"
+                required="required"
+                class="small"
+                name="name3"
+              />
+            </td>
+			 <td>
+              <input
+			    size="15"
+                type="text"
+                required="required"
+                class="small"
+                name="dname3"
+              />
+            </td>
+			 <td>
+			  <input
+                type="button"
+				value="x"
+                required="required"
+                name="btnDelete" 
+                onClick="deleteF('rowA_0')"				
+              />
+			 </td>	
+          </p>
+        </tr>
+      </tbody>
+    </table>
+    <div>
+      <tr>
+        <span>超薦大牌功德金額 HK$</span>
+        <span id="totalOfTotals2">0</span>
+      </tr>
+    </div>
+  </div>
+  
+  </body>
+  <script>
+  $(document).ready(function(){
+
+    // code to read selected table row cell data (values).
+    $("#dataTable").on('click','.btnShow',function(){
+         // get the current row
+         var currentRow=$(this).closest("tr"); 
+         
+         var col1=currentRow.find("td:eq(0)").html(); // get current row 1st table cell TD value
+         var col2=currentRow.find("td:eq(1)").html(); // get current row 2nd table cell TD value
+         var col3=currentRow.find("td:eq(2)").html(); // get current row 3rd table cell  TD value
+         var data=col1+"\n"+col2+"\n"+col3;
+         var sumContainer = document.getElementById("showTTT");
+
+		sumContainer.textContent = data;
+         //alert(data);
+    });
+});
+  
+  
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.maxHeight){
+      content.style.maxHeight = null;
+    } else {
+      content.style.maxHeight = content.scrollHeight + 110 + "px";
+    } 
+  });
+}
+</script>
+</html>
+
