@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html>
+<head translate="no">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet"/>
+ <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.1/normalize.min.css">
+	<link rel="stylesheet" href="style/combo.select.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <head>
+    <title>佛光山佛香講堂-孝道月梁皇法會(一)功德線上登記</title>
+	<style>
+	
+	#myDIV {		
+		overflow: auto;
+	}
+
+	
+	.collapsible {
+		background-color: #777;
+		color: white;
+		cursor: pointer;
+		padding: 18px;
+		width: 100%;
+		border: none;
+		text-align: left;
+		outline: none;
+		font-size: 15px;
+	}
+
+	.active, .collapsible:hover {
+		background-color: #555;
+		}
+
+	.content {
+		padding: 0 18px;
+		max-height: 0;
+		overflow: hidden;
+		transition: max-height 0.2s ease-out;
+		background-color: #f1f1f1;
+	}
+	
+	input::-webkit-calendar-picker-indicator {
+        opacity: 100;
+    }
+	
+	footer {
+		position: absolute;
+		bottom: 0;
+		width: 100%;
+		height: 5.0rem;
+	}
+	</style>
+<script language="javascript">
+      function addRow(tableID) {
+        var table = document.getElementById(tableID);
+        var rowCount = table.rows.length;
+        if (rowCount < 4) {
+          // limit the user from creating fields more than your limits
+          var row = table.insertRow(rowCount);
+
+          var colCount = table.rows[1].cells.length;
+          row.id = "row_" + rowCount;
+          for (var i = 0; i < colCount; i++) {
+            var newcell = row.insertCell(i);
+            newcell.outerHTML = table.rows[1].cells[i].outerHTML;
+			
+          }
+          var listitems = row.querySelectorAll("input, select");
+
+          for (i = 0; i < listitems.length; i++) {
+            listitems[i].setAttribute("oninput", "calculate('" + row.id + "')");
+			listitems[7].setAttribute("onClick", "deleteF('" + row.id + "')");
+			listitems[7].setAttribute("value", "x");
+			listitems[7].removeAttribute("hidden");
+          }
+        } else {
+          alert("懺主最多登記三位");
+        }
+      }
+	  
+	  function showRow(tableID) {
+	  $("#dataTable tr").each(function(){
+        var currentRow=$(this);
+    
+         var currentRow=$(this).closest("tr"); 
+         
+         var col1=currentRow.find("td:eq(2)").text(); // get current row 1st table cell TD value
+         var col2=currentRow.find("td:eq(3)").text(); // get current row 2nd table cell TD value
+         var col3=currentRow.find("td:eq(4)").text(); // get current row 3rd table cell  TD value
+         var data=col1+"\n"+col2+"\n"+col3;
+         var sumContainer = document.getElementById("showTTT");
+         alert(data);
+		sumContainer.textContent = data;
+       });
+	  }
+	  
+	   function showRowTTT(tableID) {
+	  
+	  
+	  var table = document.getElementById(tableID);
+		var colCount = table.rows[0].cells.length;
+        for (var i = 0; i < colCount; i++) {
+         //   alert("i=" + i + ", value = " + table.rows[1].cells[i].innerHTML);	
+        }
+	  
+	  
+	  //var myBox1 = document.querySelectorAll("[name=mainName]");
+	  var myBox1 = document.querySelectorAll("[name^=sel]");
+          i;
+        var sumValue = "";
+        for (i = 0; i < myBox1.length; ++i) {
+		  if (myBox1[i].value.length > 0){
+             //alert("i=" + i + ", value = " + myBox1[i].value);	
+			 sumValue += " " + myBox1[i].value;
+		  }
+        }
+		var sumContainer = document.getElementById("showTTT");
+		sumContainer.textContent = sumValue;
+	  
+	  	var table = document.getElementById(tableID);
+		var rowCount = table.rows.length;
+		var colCount = table.rows[1].cells.length;		
+          for (var i = 0; i < colCount; i++) {            
+           // alert("i=" + i + ", value = " + table.rows[1].cells[i].value);			
+          }		
+	  }
+	  function addRow2(tableID) {
+        var table = document.getElementById(tableID);
+        var rowCount = table.rows.length;
+        if (rowCount < 6) {
+          // limit the user from creating fields more than your limits
+          var row = table.insertRow(rowCount);
+
+          var colCount = table.rows[1].cells.length;
+          row.id = "rowA_" + rowCount;
+          for (var i = 0; i < colCount; i++) {
+            var newcell = row.insertCell(i);
+            newcell.outerHTML = table.rows[1].cells[i].outerHTML;
+          }
+          var listitems = row.querySelectorAll("input, select");
+
+          for (i = 0; i < listitems.length; i++) {
+            listitems[i].setAttribute("oninput", "calculate2('" + row.id + "')");
+			listitems[7].setAttribute("onClick", "deleteF('" + row.id + "')");
+			listitems[7].setAttribute("value", "x");
+			listitems[7].removeAttribute("hidden");
+          }
+        } else {
+          alert("超薦大牌最多登記五位");
+        }
+      }
+	  
+	  function calculateOld(elementID) {
+        var mainRow = document.getElementById(elementID);
+        var myBox1 = mainRow.querySelectorAll("[name=qty]")[0].value;
+        var myBox3 = mainRow.querySelectorAll("[name^=sel]")[0].value;
+        var total = mainRow.querySelectorAll("[name=total]")[0];
+        var myResult1 = myBox1 * myBox3;
+        total.value = myResult1;
+
+        // calculate the totale of every total
+        var sumContainer = document.getElementById("totalOfTotals");
+        var totalContainers = document.querySelectorAll("[name=total]"),
+          i;
+        var sumValue = 0;
+        for (i = 0; i < totalContainers.length; ++i) {
+          sumValue += parseInt(totalContainers[i].value);
+        }
+        sumContainer.textContent = sumValue;
+      }
+	  
+	  
+      function calculateNewVersionExample(elementID) {
+        var mainRow = document.getElementById(elementID);
+        var myBox1 = mainRow.querySelectorAll("[name=mainName]")[0].value;
+		var myResult1 = 0;
+		if (myBox1.length > 0){
+		   myResult1 = 1000;
+		} else {
+		   myResult1 = 0;
+		}
+
+        // calculate the totale of every total
+        var sumContainer = document.getElementById("totalOfTotals");
+        var totalContainers = document.querySelectorAll("[name=total]"),
+          i;
+        var sumValue = 0;
+        for (i = 0; i < totalContainers.length; ++i) {
+          sumValue += parseInt(totalContainers[i].value);
+        }
+		sumContainer.textContent = Number(sumContainer.textContent) + myResult1;
+      }
+	  
+	  function calculate(elementID) {
+        var sumContainer = document.getElementById("totalOfTotals");
+		var sumContainer3 = document.getElementById("totalOfTotals3");
+		var myBox1 = document.querySelectorAll("[name=mainName]");
+          i;
+        var sumValue = 0;
+        for (i = 0; i < myBox1.length; ++i) {
+		  if (myBox1[i].value.length > 0){
+            sumValue += 1000;
+		  }
+        }
+		sumContainer.textContent = sumValue;
+		sumContainer3.textContent = sumValue;
+      }
+	  
+     function calculate2(elementID) {
+        var sumContainer = document.getElementById("totalOfTotals2");
+		var myBox1 = document.querySelectorAll("[name=mainName2]");
+          i;
+        var sumValue = 0;
+        for (i = 0; i < myBox1.length; ++i) {
+		  if (myBox1[i].value.length > 0){
+            sumValue += 500;
+		  }
+        }
+		sumContainer.textContent = sumValue;
+      }
+	  
+	  function deleteF(elementID) {	 
+	    document.getElementById(elementID).outerHTML="";
+        calculate(elementID);
+		calculate2(elementID);
+      }
+	</script>
+
+  </head>
+  <body>
+   <header>
+    <div class="container">
+	   <div class="row">
+          <h2>佛光山佛香講堂-孝道月梁皇法會(一)功德線上登記</h2>	      
+	   </div>
+	</div>
+  </header>  
+  <header>
+    <div class="container">
+	   <div class="row">
+          <p>依此懺法至誠禮懺，則可消除宿業，             並可將禮佛功德，迴向現世父母，福壽綿延，歷代先遠考妣宗親蓮品增上，可謂生亡兩利功德無量。因應新冠肺炎疫情防疫政策，有意登記法會功德者，透過佛香講堂提供簡便、快速登記的方法：「轉帳、轉數快、及郵寄支票」，祈願疫情早日消除，大眾安樂富有。</p>	      
+	   </div>
+	</div>
+  </header>  
+    <header>
+    <div class="container">
+	   <div class="row">	   
+          <pre>孝道月梁皇法會(一)功德登記說明
+功德說明：
+
+(一) 登記法會會主及壇主功德，請致電2715 7933查詢。
+(二) 登記懺主、超薦大、小牌、消災大、小牌及隨喜打齋可於線上辦理。
+
+
+線上辦理繳費辦法：
+
+(一) 轉數快
+       FO GUANG SHAN INTL BUD PRO SOC(HK) LTD
+       之系統識別碼為:165036468
+     
+       請先行以轉數快方式，存入相關功德款，於進行轉帳時，
+       在備註欄上，填上姓名/電話/佛光卡，並進行拍照/截圖。
+       然後填寫本表格，並需上傳憑證至
+       WhatsApp 9485 7461；或
+
+(二) 銀行戶口轉帳
+        帳戶號碼：331-14-18690-6
+        帳戶名稱：佛光山佛香講堂有限公司 (中文)    
+                           FO GUANG SHAN INTERNATIONAL
+                           BUDDHIST PROGRESS SOCIETY
+                           (HONG KONG) LIMITED (英文)
+         銀行：上海商業銀行 
+                     SHANGHAI COMMERCIAL BANK LTD
+         
+         存入相關功德款，在入數單上註明姓名/電話/佛光卡，
+         並進行拍照/截圖。 然後填寫本表格，並需上傳憑證至
+         WhatsApp 9485 7461；或
+
+(三)  以支票繳費者，請先填寫本表格，並於支票後方寫上
+         姓名、電話、填表日期及功德項目，郵寄至以下地址。
+         支票抬頭：佛光山佛香講堂有限公司
+         郵寄地址：九龍窩打老道84號冠華園二樓A座
+
+如有查詢，請致電2715 7933或 WhatsApp 至 9485 7461。
+
+本人了解並同意佛光山寺及派下各單位得將本人所填寫的個人資料蒐集、處理、使用在功德徵信、法會、活動及未來各項活動通知、
+帳務處理與功德主提報等作業。且本人提供予道場之資料若包含本人以外之個人資料時，
+本人已以適當方式使該人等知悉其個人資料會提供予佛光山寺派下相關單位，進行蒐集、處理或利用。</pre>	      
+	   </div>
+	</div>
+  </header> 
+<contentpage>  
+<div class="container">      
+   <button class="collapsible">懺主</button>
+   <div class="content" id="myDIV">
+	<div class="row">
+   <div class="col-md-12">
+    <input type="button" value="+增加懺主" onClick="addRow('dataTable')" />
+    <input type="button" class="btnShow" value="Show" onClick="showRowTTT('dataTable')" />
+    <table id="dataTable" class="form" border="1">
+      <tbody>
+       <th width="10%">
+         <label>懺主</label><br>
+         文疏姓名 (1名)
+       </th>
+       <th width="7%">
+         稱謂1
+       </th>
+       <th width="10%">
+         亡者1
+       </th>
+       <th width="7%">
+         稱謂2
+       </th>
+       <th width="10%">
+         亡者2
+       </th>
+       <th width="7%">
+         稱謂3
+       </th>
+       <th width="10%">
+         亡者3
+       </th>
+       <th width="3%">
+       </th>
+        <tr id="row_0">
+          <p>
+            <td width="10%">             
+              <input
+			    size="8%"
+                type="text"
+                required="required"
+                name="mainName"
+                oninput="calculate('row_0')"
+              />
+            </td>
+            <td width="7%">       
+			  <input list="selList" id="sel" name="sel" placeholder="請選擇稱謂" value="" style="width: 95px;">               
+			  <datalist id="selList">
+              <!-- <select name="sel" id="sel" oninput="calculate2('rowA_0')" style="width: 100px;"> -->                
+                <option data-value="ancestor">①祖先A</option>
+                <option data-value="foundation_master">②地基主</option>
+                <option data-value="pure_land">③冤親債主</option>
+                <option data-value="Ms">④十方法界一切眾生</option>
+				<option data-value="ss">⑤無人祭祀孤魂等眾</option>
+				<option data-value="ss">⑥未出世子女</option>
+              <!-- </select> -->
+			  </datalist>			              
+            </td>		
+<!--
+            <td>          
+              <input
+                type="text"
+                required="required"
+                class="small"
+                name="name1"
+              />
+            </td>
+-->
+             <td width="10%">  
+              <input
+			    size="10%"
+                type="text"
+                required="required"
+                class="small"
+                name="dname1"
+              />
+            </td>
+             <td width="7%">  
+              <input list="selList" id="sel" name="sel" placeholder="請選擇稱謂" value="" style="width: 95px;">               
+			  <datalist id="selList">
+              <!-- <select name="sel" id="sel" oninput="calculate2('rowA_0')" style="width: 100px;"> -->                
+                <option data-value="ancestor">①祖先A</option>
+                <option data-value="foundation_master">②地基主</option>
+                <option data-value="pure_land">③冤親債主</option>
+                <option data-value="Ms">④十方法界一切眾生</option>
+				<option data-value="ss">⑤無人祭祀孤魂等眾</option>
+				<option data-value="ss">⑥未出世子女</option>
+              <!-- </select> -->
+			  </datalist>	
+            </td>
+             <td width="10%">  
+              <input
+			    size="10%"
+                type="text"
+                required="required"
+                class="small"
+                name="dname2"
+              />
+            </td>
+             <td width="7%">  
+              <input list="selList" id="sel" name="sel" placeholder="請選擇稱謂" value="" style="width: 95px;">               
+			  <datalist id="selList">
+              <!-- <select name="sel" id="sel" oninput="calculate2('rowA_0')" style="width: 100px;"> -->                
+                <option data-value="ancestor">①祖先A</option>
+                <option data-value="foundation_master">②地基主</option>
+                <option data-value="pure_land">③冤親債主</option>
+                <option data-value="Ms">④十方法界一切眾生</option>
+				<option data-value="ss">⑤無人祭祀孤魂等眾</option>
+				<option data-value="ss">⑥未出世子女</option>
+              <!-- </select> -->
+			  </datalist>	
+            </td>
+			 <td width="10%">  
+              <input
+			    size="10%"
+                type="text"
+                required="required"
+                class="small"
+                name="dname3"
+              />
+            </td>
+			 <td width="3%">   
+			  <input hidden
+			    size="3%"				
+                type="button"				
+				value=""
+                required="required"
+                name="btnDelete" 			
+              />
+			 </td>			 
+          </p>
+        </tr>
+      </tbody>
+    </table>
+    <div>
+      <tr>
+        <span>懺主功德金額 HK$</span>
+        <span id="totalOfTotals">0</span><br>
+		<span id="showTTT">0</span>
+      </tr>
+    </div>
+  </div>
+  </div>
+  </div>
+  <br>
+  <button class="collapsible">超薦大牌</button>
+  <div class="content" id="myDIV">
+  <div class="row">
+   <div class="col-md-12">
+    <input type="button" value="+增加超薦大牌" onClick="addRow2('dataTable2')" />
+    <table id="dataTable2" class="form" border="1">
+      <tbody>
+       <th width="10%">
+         <label>超薦大牌</label><br>
+         登記
+       </th>
+       <th width="7%">
+         稱謂1
+       </th>
+       <th width="10%">
+         亡者1
+       </th>
+       <th width="7%">
+         稱謂2
+       </th>
+       <th width="10%">
+         亡者2
+       </th>
+       <th width="7%">
+         稱謂3
+       </th>
+       <th width="10%">
+         亡者3
+       </th>
+       <th width="3%">
+       </th>
+        <tr id="rowA_0">
+          <p>
+            <td width="10%">             
+              <input
+			    size="8%"
+                type="text"
+                required="required"
+                name="mainName2"
+                oninput="calculate2('rowA_0')"
+              />
+            </td>
+            <td width="7%">   
+              <select name="sel" id="sel" oninput="calculate2('rowA_0')" >
+                <option value="" disabled selected>請選擇稱謂</option>
+                <option value="ancestor">①祖先</option>
+                <option value="foundation_master">②地基主</option>
+                <option value="pure_land">③冤親債主</option>
+                <option value="Ms">④十方法界一切眾生</option>
+				<option value="ss">⑤無人祭祀孤魂等眾</option>
+				<option value="ss">⑥未出世子女</option>
+              </select>
+            </td>		
+<!--
+            <td>          
+              <input			    
+                type="text"
+                required="required"
+                class="small"
+                name="name1"
+              />
+			  -->
+            <td width="10%">  
+              <input
+			    size="10%"
+                type="text"
+                required="required"
+                class="small"
+                name="dname1"
+              />
+            </td>
+             <td width="7%">  
+              <select name="sel" id="sel" oninput="calculate2('rowA_0')" style="width: 100px;">
+                <option value="" disabled selected>請選擇稱謂</option>
+                <option value="ancestor">①祖先</option>
+                <option value="foundation_master">②地基主</option>
+                <option value="pure_land">③冤親債主</option>
+                <option value="Ms">④十方法界一切眾生</option>
+				<option value="ss">⑤無人祭祀孤魂等眾</option>
+				<option value="ss">⑥未出世子女</option>
+              </select>
+            </td>
+             <td width="10%">  
+              <input
+			    size="10%"
+                type="text"
+                required="required"
+                class="small"
+                name="dname2"
+              />
+            </td>
+             <td width="7%">  
+              <select name="sel" id="sel" oninput="calculate2('rowA_0')" style="width: 100px;">
+                <option value="" disabled selected>請選擇稱謂</option>
+                <option value="ancestor">①祖先</option>
+                <option value="foundation_master">②地基主</option>
+                <option value="pure_land">③冤親債主</option>
+                <option value="Ms">④十方法界一切眾生</option>
+				<option value="ss">⑤無人祭祀孤魂等眾</option>
+				<option value="ss">⑥未出世子女</option>
+              </select>
+            </td>
+			 <td width="10%">  
+              <input
+			    size="10%"
+                type="text"
+                required="required"
+                class="small"
+                name="dname3"
+              />
+            </td>
+			 <td width="3%">   
+			  <input hidden
+			    size="3%"
+                type="button"
+				value=""
+                required="required"
+                name="btnDelete" 			
+              />
+			 </td>	
+          </p>
+        </tr>
+      </tbody>
+    </table>
+    <div>
+      <tr>
+        <span>超薦大牌功德金額 HK$</span>
+        <span id="totalOfTotals">0</span>
+      </tr>
+    </div>
+  </div>
+  </div>
+  </div>
+  <div class="footer">
+       <div class="row">
+         <span>懺主功德金額 HK$</span>
+        <span id="totalOfTotals3">0</span>
+	   </div>
+  </div>
+</contentpage>  
+   </body>
+  <script src="js/jquery.combo.select.js"></script>  
+  <script>
+  $(document).ready(function(){
+
+/*   new SELECT OPTION
+		var s = $('select')
+			.comboSelect()
+			
+*/
+    // code to read selected table row cell data (values).
+    $("#dataTable").on('click','.btnShow',function(){
+         // get the current row
+         var currentRow=$(this).closest("tr"); 
+         
+         var col1=currentRow.find("td:eq(0)").html(); // get current row 1st table cell TD value
+         var col2=currentRow.find("td:eq(1)").html(); // get current row 2nd table cell TD value
+         var col3=currentRow.find("td:eq(2)").html(); // get current row 3rd table cell  TD value
+         var data=col1+"\n"+col2+"\n"+col3;
+         var sumContainer = document.getElementById("showTTT");
+
+		sumContainer.textContent = data;
+         //alert(data);
+    });
+});
+  
+  
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.maxHeight){
+      content.style.maxHeight = null;
+    } else {
+      content.style.maxHeight = content.scrollHeight + 130 + "px";
+    } 
+  });
+}
+</script>
+</html>
+
