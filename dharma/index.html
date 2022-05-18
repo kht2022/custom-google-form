@@ -41,8 +41,9 @@
         }
       }
 	  
-	  function showRow(tableID) {
-	  $("#dataTable tr").each(function(){
+	  function showRowOrig(tableID) {
+	  
+	  $("#dataTable2 tr").each(function(){
         var currentRow=$(this);
     
          var currentRow=$(this).closest("tr"); 
@@ -52,12 +53,60 @@
          var col3=currentRow.find("td:eq(4)").text(); // get current row 3rd table cell  TD value
          var data=col1+"\n"+col2+"\n"+col3;
          var sumContainer = document.getElementById("showTTT");
-         alert(data);
+         //alert(data);
 		sumContainer.textContent = data;
        });
+	   
+	   /*
+	   var data1;
+	   
+	   $("#dataTable2 tr").each(function(){	    	    
+	     $(this).find("td").each(function(){
+            data1 += $(this).text() + ",";
+           )};		   
+       });
+	   alert(data1);
+	   */
+	   
+	   var set = [];
+	    $("#dataTable2 tr").each(function(){		
+			var row = [];
+		
+			$(this).find("td").each(function() {
+			row.push($(this).text());
+			});
+    
+		set.push(row);
+		});   
+	   	    
 	  }
 	  
-	   function showRowTTT(tableID) {
+	  function showRow(tableID) {
+	  var data1;
+	  $("#dataTable2 tr").each(function(){    
+		
+			$(this).find("td").each(function() {
+			 data1 += $(this).text() + ",";
+			});
+    
+		
+       });
+	   
+	   /*
+	   var data1;
+	   
+	   $("#dataTable2 tr").each(function(){	    	    
+	     $(this).find("td").each(function(){
+            data1 += $(this).text() + ",";
+           )};		   
+       });
+	   alert(data1);
+	   */
+	    
+	   	    
+	  }
+	  
+	 function showRowTTT(tableID) {
 	  
 	  
 	  var table = document.getElementById(tableID);
@@ -424,6 +473,7 @@
   <div class="row">
    <div class="col-md-12">
     <input type="button" value="+增加超薦大牌" onClick="addRow2('dataTable2')" />
+	<input type="button" class="btnShow" value="Show" onClick="showRow('dataTable2')" />
     <table id="dataTable2" class="form" border="1">
       <tbody>
        <th width="10%">
@@ -517,8 +567,7 @@
                 required="required"
                 class="small"
                 name="dname3"
-              />
-            <
+              />            
 			 <td width="3%">   
 			  <input hidden
 			    size="3%"
