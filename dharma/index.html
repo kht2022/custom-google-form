@@ -411,6 +411,7 @@
 </head>
  
 <body>
+<form>
  <h2>佛光山佛香講堂-孝道月梁皇法會(一)功德線上登記</h2>
   <div class="tabs">
   <input type="radio" name="tabs" id="tabone" checked="checked">
@@ -918,10 +919,14 @@
 	   轉數快<br>
 	   銀行戶口轉帳<br>
 	   郵寄支票 (支票枱頭: 佛光山佛香講堂有限公司)</p><br>
+	   <div class="input-group">
+            <span for="demo_name">姓名</span>
+            <input class="u-full-width" type="text" placeholder="姓名" id="demo_name">
+       </div>
 	   <button type="button" id="submit" class="button-primary u-full-width">確認送出</button>
   </div>
 </div>
- 
+ </form>
 </body>
   <script src="js/jquery.combo.select.js"></script>  
   <script>
@@ -985,7 +990,7 @@ for (i = 0; i < coll.length; i++) {
       $('#submit').on('click', function() {
         
         // 姓名
-        var name = "test";//$('#demo_name').val() || '未填寫';
+        var name = $('#demo_name').val() || '未填寫';
 
         // 性別
 		/*
@@ -1006,8 +1011,9 @@ for (i = 0; i < coll.length; i++) {
 
         // post
         var data = {
-		/*
+		 
           'entry.1253435296': name,
+		  /*
           'entry.1239222183': title,
 		  'entry.2138990295': "佛光卡號碼(如適用)",
 		  'entry.961818793': "聯絡人：姓名 / 電話 (如適用)",
@@ -1015,21 +1021,21 @@ for (i = 0; i < coll.length; i++) {
 		  'entry.1634721402':"懺主(一)  稱謂1:"
 		  */
 		  
-		  'entry.89907163' : "testCat",
-		  'entry.1733046673' : "testing123",
-		  'entry.1943281792' : "test3"
-          //'entry.1509045370': cat,
-          //'entry.758411200': msg
+		  //-'entry.89907163' : name,
+		  //-'entry.1733046673' : "testing123"
+		  //-'entry.1943281792' : "test3"
+          
         };
         $.ajax({
           type: 'POST',
-          //url: 'https://docs.google.com/forms/u/0/d/e/1FAIpQLSfwyVFoWP0RXR0MJtzO7KJ_XafD4XapUI3Ezbl_WaFjqKwAcw/formResponse',
-		  url: 'https://docs.google.com/forms/u/0/d/e/1FAIpQLSdIFtNarQnlQ1L3kYBEEgpDcTMFx4FJY1hD_vPzpYbMddliAA/formResponse',
+          url: 'https://docs.google.com/forms/u/0/d/e/1FAIpQLSfwyVFoWP0RXR0MJtzO7KJ_XafD4XapUI3Ezbl_WaFjqKwAcw/formResponse',
+		  //url: 'https://docs.google.com/forms/u/0/d/e/1FAIpQLSdIFtNarQnlQ1L3kYBEEgpDcTMFx4FJY1hD_vPzpYbMddliAA/formResponse',
           data: data,
           contentType: 'application/json',
           dataType: 'jsonp',
           complete: function() {
             alert('資料已送出！');
+			$('#demo_name').val('');
           }
         });
         
