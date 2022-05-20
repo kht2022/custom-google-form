@@ -9,7 +9,6 @@
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/tabs_css.css">
  
-  
   <script language="javascript">
       function addRow(tableID) {
         var table = document.getElementById(tableID);
@@ -411,7 +410,7 @@
 </head>
  
 <body>
-<form>
+<form id="myform">
  <h2>佛光山佛香講堂-孝道月梁皇法會(一)功德線上登記</h2>
   <div class="tabs">
   <input type="radio" name="tabs" id="tabone" checked="checked">
@@ -480,7 +479,7 @@
    <div class="col-md-12">
     <input type="button" value="+增加懺主" onClick="addRow('dataTable')" />
     <input type="button" class="btnShow" value="Show" onClick="showRowTTT('dataTable')" />
-    <table id="dataTable" class="form" border="1">
+    <table id="dataTable" class="form1" border="1">
       <tbody>
        <th width="10%">
          <span style="font-size:12.0pt">懺主(一)登記</span><br>
@@ -627,7 +626,7 @@
    <div class="col-md-12">
     <input type="button" value="+增加超薦大牌" onClick="addRow2('dataTable2')" />
 	<input type="button" class="btnShow" value="Show" onClick="showRow('dataTable2')" />
-    <table id="dataTable2" class="form" border="1">
+    <table id="dataTable2" class="form1" border="1">
       <tbody>
        <th width="10%">
          <label>超薦大牌</label><br>
@@ -767,7 +766,7 @@
    <div class="col-md-12">
     <input type="button" value="+增加超薦小牌" onClick="addRow3('dataTable3')" />
 	<input type="button" class="btnShow" value="Show" onClick="showRow('dataTable3')" />
-    <table id="dataTable3" class="form" border="1">
+    <table id="dataTable3" class="form1" border="1">
       <tbody>
        <th width="10%">
          <label>超薦小牌</label><br>
@@ -842,7 +841,7 @@
    <div class="col-md-12">
     <input type="button" value="+增加消災大牌" onClick="addRow4('dataTable4')" />
 	<input type="button" class="btnShow" value="Show" onClick="showRow('dataTable4')" />
-    <table id="dataTable4" class="form" border="1">
+    <table id="dataTable4" class="form1" border="1">
       <tbody>
        <th width="10%">                    
 		  <span style="font-size:12.0pt">眷屬姓名 (1-6名)或公司名稱(1名)</span><br><br>
@@ -928,6 +927,80 @@
 </div>
  </form>
 </body>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script>
+    $(function() {
+      $('#submit').on('click', function() {
+        
+        // 姓名
+        var name = $('#demo_name').val() || '未填寫';
+
+        // 性別
+		/*
+        var sex = function() {
+          var v;
+          $('[name="demo_radio"]').each(function() {
+            if($(this).prop('checked') === true) v = $(this).val();
+          });
+          return v;
+        };
+		*/
+
+        // 類別
+        var title = "title"; //$('#demo_select').val() || '未填寫';
+
+        // 內容
+        //var msg = $('#demo_textarea').val() || '未填寫';
+
+        // post
+        var data = {
+		'entry.89907163': 'nameGood',
+          //'entry.1733046673': 'cb()day',
+          //'entry.190242280': 'totall',
+  /*   letwrite		
+  'entry.248434920': 'nameTTT',
+  'entry.1569038925': 'sex()',
+  'entry.1509045370': 'cat',
+  'entry.758411200': 'msg'
+  */
+		 /*
+          'entry.1253435296': name,
+		  'entry.1239222183': '1234',
+		  'entry.2138990295': 'M02222',
+		  
+          'entry.1239222183': title,
+		  'entry.2138990295': "佛光卡號碼(如適用)",
+		  'entry.961818793': "聯絡人：姓名 / 電話 (如適用)",
+		  'entry.477758042': "文疏姓名 (1名)",
+		  'entry.1634721402':"懺主(一)  稱謂1:"
+		  */
+		  
+		  //-'entry.89907163' : name,
+		  //-'entry.1733046673' : "testing123"
+		  //-'entry.1943281792' : "test3"
+          
+        };
+        $.ajax({
+          type: 'POST',
+		         
+				 //url:'https://docs.google.com/forms/d/e/1FAIpQLSeTgHEpVpuV_OHakO-25X-O7I4T1tIzIAUqHWLRvUqG9e6TvQ/formResponse', //letwrite
+            //---url: 'https://docs.google.com/forms/d/e/1FAIpQLSfwyVFoWP0RXR0MJtzO7KJ_XafD4XapUI3Ezbl_WaFjqKwAcw/formResponse',
+		  url: 'https://docs.google.com/forms/d/e/1FAIpQLSdIFtNarQnlQ1L3kYBEEgpDcTMFx4FJY1hD_vPzpYbMddliAA/formResponse',
+		          
+		   //       https://docs.google.com/forms/u/0/d/e/1FAIpQLSfwyVFoWP0RXR0MJtzO7KJ_XafD4XapUI3Ezbl_WaFjqKwAcw/formResponse?edit2=2_ABaOnudAOAY7Rv_QYbOGKn_ISY84YxZkHsK7UsOuW9Kp-8TzzgQ4dcxThnzNnyrzvCtJBuM
+          data: data,
+          contentType: 'application/json',
+          dataType: 'jsonp',
+          complete: function() {
+            alert('資料已送出！');
+			$('#demo_name').val('');
+          }
+        });
+        
+      });
+    });
+  </script>
+  
   <script src="js/jquery.combo.select.js"></script>  
   <script>
   $(document).ready(function(){
@@ -984,62 +1057,5 @@ for (i = 0; i < coll.length; i++) {
   });
 }
 </script>
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-  <script>
-    $(function() {
-      $('#submit').on('click', function() {
-        
-        // 姓名
-        var name = $('#demo_name').val() || '未填寫';
 
-        // 性別
-		/*
-        var sex = function() {
-          var v;
-          $('[name="demo_radio"]').each(function() {
-            if($(this).prop('checked') === true) v = $(this).val();
-          });
-          return v;
-        };
-		*/
-
-        // 類別
-        var title = "title"; //$('#demo_select').val() || '未填寫';
-
-        // 內容
-        //var msg = $('#demo_textarea').val() || '未填寫';
-
-        // post
-        var data = {
-		 
-          'entry.1253435296': name,
-		  /*
-          'entry.1239222183': title,
-		  'entry.2138990295': "佛光卡號碼(如適用)",
-		  'entry.961818793': "聯絡人：姓名 / 電話 (如適用)",
-		  'entry.477758042': "文疏姓名 (1名)",
-		  'entry.1634721402':"懺主(一)  稱謂1:"
-		  */
-		  
-		  //-'entry.89907163' : name,
-		  //-'entry.1733046673' : "testing123"
-		  //-'entry.1943281792' : "test3"
-          
-        };
-        $.ajax({
-          type: 'POST',
-          url: 'https://docs.google.com/forms/u/0/d/e/1FAIpQLSfwyVFoWP0RXR0MJtzO7KJ_XafD4XapUI3Ezbl_WaFjqKwAcw/formResponse',
-		  //url: 'https://docs.google.com/forms/u/0/d/e/1FAIpQLSdIFtNarQnlQ1L3kYBEEgpDcTMFx4FJY1hD_vPzpYbMddliAA/formResponse',
-          data: data,
-          contentType: 'application/json',
-          dataType: 'jsonp',
-          complete: function() {
-            alert('資料已送出！');
-			$('#demo_name').val('');
-          }
-        });
-        
-      });
-    });
-  </script>
 </html>
