@@ -954,39 +954,13 @@
 
         // post
         var data = {
-		/*
-		'entry.89907163': name,
-          //'entry.1733046673': 'cb()day',
-          //'entry.190242280': 'totall',
-		*/
-		
-  /*   letwrite		
-  'entry.248434920': 'nameTTT',
-  'entry.1569038925': 'sex()',
-  'entry.1509045370': 'cat',
-  'entry.758411200': 'msg'
-  */
-		 
-          'entry.1253435296': name,
-		  'entry.1239222183': '1234',
-		  'entry.2138990295': 'M02222',
-		/*  
-          'entry.1239222183': title,
-		  'entry.2138990295': "佛光卡號碼(如適用)",
-		  'entry.961818793': "聯絡人：姓名 / 電話 (如適用)",
-		  'entry.477758042': "文疏姓名 (1名)",
-		  'entry.1634721402':"懺主(一)  稱謂1:"
-		  */
-		  
-		  //-'entry.89907163' : name,
-		  //-'entry.1733046673' : "testing123"
-		  //-'entry.1943281792' : "test3"
-          
+		'entry.1253435296': name,
         };
         $.ajax({
           type: 'POST',		         		
+            //	url: 'https://docs.google.com/forms/u/0/d/e/1FAIpQLSftgRswIjGLihx9z3DdaiL23g7Z7BxTxwFrC7AStd9M-ke-3w/formResponse',	
             url: 'https://docs.google.com/forms/d/e/1FAIpQLSftgRswIjGLihx9z3DdaiL23g7Z7BxTxwFrC7AStd9M-ke-3w/formResponse',					      
-				  //https://docs.google.com/forms/u/0/d/e/1FAIpQLSftgRswIjGLihx9z3DdaiL23g7Z7BxTxwFrC7AStd9M-ke-3w/formResponse
+
           data: data,
           contentType: 'application/json',
           dataType: 'jsonp',
