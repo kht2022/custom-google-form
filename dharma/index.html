@@ -990,10 +990,14 @@
   
 <!--  <script src="js/jquery.combo.select.js"></script>   -->
   <script>
-  $(document).ready(function()
-     
-     var tabtwo = document.getElementById('tabtwo');
-     tabtwo.setAttribute("disabled", true);
+    $(document).ready(function(){
+  var tabtwo = document.getElementById('tabtwo');
+  tabtwo.setAttribute("disabled", true);
+  //tabtwo.setAttribute("hidden", true);
+  tabtwo.setAttribute("style", "background-color: #fccc;");
+  document.getElementById("tabtwo").style.display = "none";// .visibility = "hidden";//.style.backgroundColor="pink";
+  //var tabtwo = document.getElementById('tabtwo');
+  //tabtwo.setAttribute("hidden", true);  
   /*
   var tabtwo = document.getElementById('tabtwo');
   tabtwo.setAttribute("disabled", true);  
@@ -1023,7 +1027,7 @@
 		sumContainer.textContent = data;
          //alert(data);
     });
-	/*
+/*	
 	$('#tab1').on('click', function() {
 		var tabtwo = document.getElementById('tabtwo');
 		tabtwo.setAttribute("disabled", false);  
@@ -1033,19 +1037,19 @@
 		tabfour.setAttribute("disabled", false);
 		var tabfive = document.getElementById('tabfive');
 		tabfive.setAttribute("disabled", false);
-	});
-	 */
-	  
+	}
+	*/
 	$('#tab1').on('click', function() {
-    	  if(document.getElementById('tab1').checked) {           
-	       var tabtwo = document.getElementById('tabtwo');
-               tabtwo.removeAttribute("disabled", false);
-          } else {
-               var tabtwo = document.getElementById('tabtwo');
-               tabtwo.setAttribute("disabled", true);
-          }	    
+    	if(document.getElementById('tab1').checked) {           
+		   var tabtwo = document.getElementById('tabtwo');
+           tabtwo.removeAttribute("disabled", false);
+        } else {
+           var tabtwo = document.getElementById('tabtwo');
+           tabtwo.setAttribute("disabled", true;
+        }
+	    
 	});
-	  
+	
 	$('#text').on('click', function() {
 	   	  var myBox1 = document.querySelectorAll("[name^=sel]");
           i;
@@ -1059,8 +1063,7 @@
 		var sumContainer = document.getElementById("showZZZ");
 		sumContainer.textContent = sumValue;
 	});
-});
-  
+});  
   
 var coll = document.getElementsByClassName("collapsible");
 var i;
