@@ -270,7 +270,7 @@
 		sumContainer.textContent = Number(sumContainer.textContent) + myResult1;
       }
 	  
-	  function calculate(elementID) {
+	  function calculate(elementID) {//懺主
         var sumContainer = document.getElementById("totalOfTotals");
 		var sumContainer3 = document.getElementById("totalOfTotals3");
 		var myBox1 = document.querySelectorAll("[name=mainName]");
@@ -281,7 +281,7 @@
             sumValue += 1000;
 		  }
         }
-		sumContainer.textContent = sumValue;
+		sumContainer.textContent = sumValue + " (" + i + ")";
 		
 		var sumContainer999 = document.getElementById("totalOfTotals999");
 		var sumContainer111 = document.getElementById("totalOfTotals").textContent;
@@ -291,7 +291,7 @@
 		sumContainer999.textContent = Number(sumContainer111) + Number(sumContainer222) + Number(sumContainer333) + Number(sumContainer444);
       }
 	  
-     function calculate2(elementID) {
+     function calculate2(elementID) {//超薦大牌
         var sumContainer = document.getElementById("totalOfTotals2");
 		var myBox1 = document.querySelectorAll("[name=mainName2]");
           i;
@@ -301,7 +301,7 @@
             sumValue += 500;
 		  }
         }
-		sumContainer.textContent = sumValue;
+		sumContainer.textContent = sumValue + " (" + i + ")";
 		
 		var sumContainer999 = document.getElementById("totalOfTotals999");
 		var sumContainer111 = document.getElementById("totalOfTotals").textContent;
@@ -310,7 +310,7 @@
 		
       }
 	  
-	  function calculate3(elementID) {
+	  function calculate3(elementID) {//超薦小牌
         var sumContainer = document.getElementById("totalOfTotals3");
 		var myBox1 = document.querySelectorAll("[name=mainName3");
           i;
@@ -320,7 +320,7 @@
             sumValue += 100;
 		  }
         }
-		sumContainer.textContent = sumValue;
+		sumContainer.textContent = sumValue + " (" + i + ")";
 		
 		var sumContainer999 = document.getElementById("totalOfTotals999");
 		var sumContainer111 = document.getElementById("totalOfTotals").textContent;
@@ -477,6 +477,12 @@
   <input type="radio" name="tabs" id="tabfour">
   <label for="tabfour">資料</label>
   <div class="tab">
+  <span>登記懺主總金額 HK$</span>
+  <span id="totalOfTotals">0</span>&nbsp;+&nbsp;
+  <span>登記超薦大牌總金額 HK$</span>
+  <span id="totalOfTotals2">0</span>&nbsp;+&nbsp;
+  <span>登記超薦小牌總金額 HK$</span>
+  <span id="totalOfTotals3">0</span>&nbsp;=&nbsp;  
   <span>登記總金額 HK$</span>
   <span id="totalOfTotals999">0</span>
   <button class="collapsible" style="background-color: #85B7F3;">懺主 (1支-HK$1000)</button>
