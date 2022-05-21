@@ -990,7 +990,9 @@
   
 <!--  <script src="js/jquery.combo.select.js"></script>   -->
   <script>
-  $(document).ready(function(){
+  $(document).ready(function()
+      var tabtwo = document.getElementById('tabtwo');
+      tabtwo.setAttribute("disabled", true);
   /*
   var tabtwo = document.getElementById('tabtwo');
   tabtwo.setAttribute("disabled", true);  
@@ -1032,6 +1034,15 @@
 		tabfive.setAttribute("disabled", false);
 	}
 	 */
+	$('#tab1').on('click', function() {
+    	  if(document.getElementById('tab1').checked) {           
+	       var tabtwo = document.getElementById('tabtwo');
+               tabtwo.removeAttribute("disabled", false);
+          } else {
+               var tabtwo = document.getElementById('tabtwo');
+               tabtwo.setAttribute("disabled", true);
+          }	    
+	});
 	$('#text').on('click', function() {
 	   	  var myBox1 = document.querySelectorAll("[name^=sel]");
           i;
