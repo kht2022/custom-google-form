@@ -281,7 +281,7 @@
             sumValue += 1000;
 		  }
         }
-		sumContainer.textContent = sumValue + " (" + i + ")";
+		sumContainer.textContent = sumValue;
 		
 		var sumContainer999 = document.getElementById("totalOfTotals999");
 		var sumContainer111 = document.getElementById("totalOfTotals").textContent;
@@ -289,6 +289,7 @@
 		var sumContainer333 = document.getElementById("totalOfTotals3").textContent;
 		var sumContainer444 = document.getElementById("totalOfTotals4").textContent;
 		sumContainer999.textContent = Number(sumContainer111) + Number(sumContainer222) + Number(sumContainer333) + Number(sumContainer444);
+		sumContainer.textContent = sumValue + " (" + i + ")";
       }
 	  
      function calculate2(elementID) {//超薦大牌
@@ -301,12 +302,13 @@
             sumValue += 500;
 		  }
         }
-		sumContainer.textContent = sumValue + " (" + i + ")";
+		sumContainer.textContent = sumValue;
 		
 		var sumContainer999 = document.getElementById("totalOfTotals999");
 		var sumContainer111 = document.getElementById("totalOfTotals").textContent;
 		var sumContainer222 = document.getElementById("totalOfTotals2").textContent;
 		sumContainer999.textContent = Number(sumContainer111) + Number(sumContainer222);
+	        sumContainer.textContent = sumValue + " (" + i + ")";
 		
       }
 	  
@@ -320,13 +322,14 @@
             sumValue += 100;
 		  }
         }
-		sumContainer.textContent = sumValue + " (" + i + ")";
+		sumContainer.textContent = sumValue;
 		
 		var sumContainer999 = document.getElementById("totalOfTotals999");
 		var sumContainer111 = document.getElementById("totalOfTotals").textContent;
 		var sumContainer222 = document.getElementById("totalOfTotals2").textContent;
 		var sumContainer333 = document.getElementById("totalOfTotals3").textContent;
 		sumContainer999.textContent = Number(sumContainer111) + Number(sumContainer222) + Number(sumContainer333);
+		sumContainer.textContent = sumValue + " (" + i + ")";  
 		
       }
 	  
@@ -348,6 +351,7 @@
 		var sumContainer333 = document.getElementById("totalOfTotals3").textContent;
 		var sumContainer444 = document.getElementById("totalOfTotals4").textContent;
 		sumContainer999.textContent = Number(sumContainer111) + Number(sumContainer222) + Number(sumContainer333) + Number(sumContainer444);
+		sumContainer.textContent = sumValue + " (" + i + ")";  
 		
       }
 	  
