@@ -306,15 +306,14 @@
           row.id = "rowB_" + rowCount;
           for (var i = 0; i < colCount; i++) {
             var newcell = row.insertCell(i);
-            newcell.outerHTML = table.rows[1].cells[i].outerHTML;
+            newcell.outerHTML = table.rows[1].cells[i].outerHTML.replace("亡者稱謂", "亡者稱謂 " + rowCount);
 			//var subCount = document.getElementById("subCount");
 			//subCount.textContent = rowCount;
           }
           var listitems = row.querySelectorAll("input, select");
 
           for (i = 0; i < listitems.length; i++) {
-            listitems[i].setAttribute("oninput", "calculate3('" + row.id + "')");							
-			
+            listitems[i].setAttribute("oninput", "calculate3('" + row.id + "')");									
 			listitems[1].setAttribute("onChange", "view('" + row.id + "')");
 			
 			listitems[3].setAttribute("onClick", "deleteF('" + row.id + "')");
@@ -554,7 +553,6 @@
 		calculate3(elementID);
 		calculate4(elementID);
 		calculate5(elementID);
-		
       }
 	  
 	  function view(elementID) {	 
@@ -614,7 +612,7 @@
 </head> 
   
 <body> 
-    <h1>佛光山佛香講堂-孝道月梁皇法會(一)功德線上登記 v.1</h1> 
+    <h1>佛光山佛香講堂-孝道月梁皇法會(一)功德線上登記 v0.2</h1> 
     <h3>孝道月梁皇法會(一)功德登記說明</h3> 
   
     <div id="gfg"> 
@@ -785,12 +783,10 @@
                 oninput="calculate('row_0')"
               />
             </td>
-            <td width="7%">       
-			<!--
+            <td width="7%">       			              
 			  <input list="selList" id="sel" name="sel" onChange="view('row_0')" placeholder="請選擇稱謂" value="" style="width: 95px;">               			   
-			  <datalist id="selList">
-			  -->
-              <select name="sel" id="sel" onChange="view('row_0')" style="width: 100px;">
+			  <datalist id="selList"> 
+			  <!-- <select name="sel" id="sel" onChange="view('row_0')" style="width: 100px;"> -->
 			    <option value="自行填寫">自行填寫</option>
                 <option value="①祖先">①祖先</option>
                 <option value="②地基主">②地基主</option>
@@ -1035,48 +1031,54 @@
 	<input type="button" class="btnShow" value="Show" onClick="showRow('dataTable3')" />
     <table id="dataTable3" class="form1" border="0">
       <tbody>
-       <th width="10%">
+	  <!--
+       <th width="20%" align="left">
          亡者稱謂<strong style="color: red;">*</strong>
        </th>
-       <th width="50%">
+       <th width="60%" align="left">
          超薦亡者
        </th>
        <th width="20%">
-         
+        
        </th>         
+	   -->
        <th width="3%">
        </th>
-        <tr id="rowB_0">
+        <tr id="rowB_0" width="80%">
           <p>
-            <td width="10%">        
+            <td width="20%">        
 			  <span id="subCount"></span>
+			  亡者稱謂<strong style="color: red;">*</strong><br>
               <input
-			    size="8%"
+			    size="13%"
                 type="text"
                 required="required"
                 name="mainName3"
                 oninput="calculate3('rowB_0')"
-	       /><br>
-		陽上姓名 (1名)<strong style="color: red;">*</strong>
-		<input
-		 size="20%"
-                 type="text"
-                 required="required"
-                 class="small"
-                 name="dname2"
-                />                  
+              /> <br>
+			  <span style="font-size:9.0pt">或者填寫稱謂代碼</span><br>
+			   陽上姓名 (1名)<strong style="color: red;">*</strong>
+			  <input
+			    size="20%"
+                type="text"
+                required="required"
+                class="small"
+                name="dname2"
+              /> 
+			  
             </td>
-            <td width="52%" style="vertical-align:top">        
+            <td width="62%" style="vertical-align:top">        
+			  超薦亡者<br>
               <input
-			    size="50%"
+			    size="60%"
                 type="text"
                 required="required"
                 class="small"
                 name="dname1"
-              />
+              /><br>
+			  <span style="font-size:9.0pt">超薦①祖先, 請填寫姓氏; 超薦②地基主, 請填寫詳細地址</span><br>
             </td>	
-                      
-            </td>
+             
 			 <td width="3%">   
 			  <input hidden
 			    size="3%"
@@ -1118,7 +1120,7 @@
        <th width="30%">
          稱謂
        </th>
-       <th width="7%">
+       <th width="80%">
          YYY
        </th>         
        <th width="3%">
@@ -1135,9 +1137,9 @@
                 oninput="calculate4('rowC_0')"
               />
             </td>
-            <td width="32%">        
+            <td width="82%">        
               <input
-			    size="30%"
+			    size="80%"
                 type="text"
                 required="required"
                 class="small"
