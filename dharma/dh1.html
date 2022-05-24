@@ -1,0 +1,1501 @@
+<!doctype html> 
+<html>   
+<head> 
+<meta charset="UTF-8">
+  <title>dharma</title>
+    <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet"> 
+	<style>
+	  #script2 {
+		background-color:coral;
+		width:700px;
+		height:50%;
+		border: 1px solid black;
+		overflow-x: hidden;
+		overflow-y: scroll;
+	}
+	</style>
+	<link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/tabs_css.css">
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js">  
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script> 
+  
+    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script> 
+  
+    <script> 
+        $(function () {
+
+		    $('#btnShow').prop('disabled', false);
+		    
+            $("#gfg").tabs({ 
+                disabled:[1,2,3,4],  //disabled page 2,3,4,5
+                active:0
+            }); 
+			
+			
+			$('#btnShow').click(function(){
+				//alert("bottom!");
+				$("#gfg").tabs({ 
+					disabled:[]               
+				});	
+				$("html, body").animate({ scrollTop: 0 }, "slow");
+				return false;
+			});
+			
+			$('#submit').on('click', function() {
+        
+        // 姓名
+		if ($('#demo_name').val().length == 0){
+		   alert('請輸入捐款人全名');
+		   /*
+		   var tabone = document.getElementById('tabone');
+		   tabone.setAttribute("checked", true);
+		   $('#demo_name').focus();
+		   */
+		   return false;
+		}
+        var name = $('#demo_name').val() || '未填寫';
+
+        // 性別
+		/*
+        var sex = function() {
+          var v;
+          $('[name="demo_radio"]').each(function() {
+            if($(this).prop('checked') === true) v = $(this).val();
+          });
+          return v;
+        };
+		*/
+
+        // 類別
+        var title = "title"; //$('#demo_select').val() || '未填寫';
+
+        // 內容
+        //var msg = $('#demo_textarea').val() || '未填寫';
+
+        // post
+        var data = {		         
+          'entry.1253435296': name,  //捐款人全名 
+          'entry.2138990295': name, //佛光卡號碼(如適用)
+          'entry.961818793': name,  //聯絡人：姓名 / 電話 (如適用) 
+        };
+        $.ajax({
+          type: 'POST',		         		            						
+			url: 'https://docs.google.com/forms/d/e/1FAIpQLSdV1LOCgF3V3Pb2b5yqBRpxSPRZniMYaINpmM5JSXBEckpOyg/formResponse',
+          data: data,
+          contentType: 'application/json',
+          dataType: 'jsonp',
+          complete: function() {
+            alert('資料已送出！');
+			$('#demo_name').val('');
+			$("#gfg").tabs({ 
+                disabled:[1,2,3,4],  //disabled page 2,3,4,5
+                active:0
+            });
+          }
+        });
+        
+      });
+			
+        }); 
+
+        function ff(){
+            $("#gfg").tabs({
+                disabled:[]
+              });
+        }
+     
+     function getDocHeight() {	// $(document).height() value depends on browser
+        var D = document;
+        return Math.max(
+          D.body.scrollHeight, D.documentElement.scrollHeight,
+          D.body.offsetHeight, D.documentElement.offsetHeight,
+          D.body.clientHeight, D.documentElement.clientHeight
+       );
+     } 
+    
+	$(window).scroll(function() {
+       if($(window).scrollTop() + $(window).height() == getDocHeight()) {
+          // alert("bottom!");
+		   $('#btnShow').prop('disabled', false);
+       }
+	});
+	
+	
+		
+ 
+ /*
+    $('.btnShow').on('click', function() {
+		var tabtwo = document.getElementById('tabtwo');
+		tabtwo.setAttribute("disabled", false);  
+		var tabthree = document.getElementById('tabthree');
+		tabthree.setAttribute("disabled", false);
+		var tabfour = document.getElementById('tabfour');
+		tabfour.setAttribute("disabled", false);
+		var tabfive = document.getElementById('tabfive');
+		tabfive.setAttribute("disabled", false);
+	}
+ */
+    </script> 
+	
+	
+	
+	
+  <script language="javascript">
+      function addRow(tableID) {
+        var table = document.getElementById(tableID);
+        var rowCount = table.rows.length;
+        if (rowCount < 4) {
+          // limit the user from creating fields more than your limits
+          var row = table.insertRow(rowCount);
+
+          var colCount = table.rows[0].cells.length;
+          row.id = "row_" + rowCount;
+          for (var i = 0; i < colCount; i++) {
+            var newcell = row.insertCell(i);
+            newcell.outerHTML = table.rows[0].cells[i].outerHTML;
+			
+          }
+          var listitems = row.querySelectorAll("input, select");
+
+          for (i = 0; i < listitems.length; i++) {
+            listitems[i].setAttribute("oninput", "calculate('" + row.id + "')");
+			
+			listitems[1].setAttribute("onChange", "view('" + row.id + "')");
+			
+			listitems[8].setAttribute("onClick", "deleteF('" + row.id + "')");
+			listitems[8].setAttribute("value", "x");
+			listitems[8].removeAttribute("hidden");
+          }
+        } else {
+          alert("懺主最多登記三位");
+        }
+      }
+	  
+	  function showRowOrig(tableID) {
+	  
+	  $("#dataTable2 tr").each(function(){
+        var currentRow=$(this);
+    
+         var currentRow=$(this).closest("tr"); 
+         
+         var col1=currentRow.find("td:eq(2)").text(); // get current row 1st table cell TD value
+         var col2=currentRow.find("td:eq(3)").text(); // get current row 2nd table cell TD value
+         var col3=currentRow.find("td:eq(4)").text(); // get current row 3rd table cell  TD value
+         var data=col1+"\n"+col2+"\n"+col3;
+         var sumContainer = document.getElementById("showTTT");
+         //alert(data);
+		sumContainer.textContent = data;
+       });
+	   
+	   /*
+	   var data1;
+	   
+	   $("#dataTable2 tr").each(function(){	    	    
+	     $(this).find("td").each(function(){
+            data1 += $(this).text() + ",";
+           )};		   
+       });
+	   alert(data1);
+	   */
+	   
+	   var set = [];
+	    $("#dataTable2 tr").each(function(){		
+			var row = [];
+		
+			$(this).find("td").each(function() {
+			row.push($(this).text());
+			});
+    
+		set.push(row);
+		});   
+	   	    
+	  }
+	  
+	  function showRow(tableID) {
+	  var data1;
+	  $("#dataTable2 tr").each(function(){    
+		
+			$(this).find("td").each(function() {
+			 data1 += $(this).text() + ",";
+			});
+    
+		
+       });
+	   
+	   /*
+	   var data1;
+	   
+	   $("#dataTable2 tr").each(function(){	    	    
+	     $(this).find("td").each(function(){
+            data1 += $(this).text() + ",";
+           )};		   
+       });
+	   alert(data1);
+	   */
+	    
+	   	    
+	  }
+	  
+	 function showRowTTT(tableID) {
+	  
+	  
+	  var table = document.getElementById(tableID);
+		var colCount = table.rows[0].cells.length;
+        for (var i = 0; i < colCount; i++) {
+         //   alert("i=" + i + ", value = " + table.rows[1].cells[i].innerHTML);	
+        }
+	  
+	  
+	  //var myBox1 = document.querySelectorAll("[name=mainName]");
+	  var myBox1 = document.querySelectorAll("[name^=sel]");
+          i;
+        var sumValue = "";
+        for (i = 0; i < myBox1.length; ++i) {
+		  if (myBox1[i].value.length > 0){
+             //alert("i=" + i + ", value = " + myBox1[i].value);	
+			 sumValue += " " + myBox1[i].value;
+		  }
+        }
+		var sumContainer = document.getElementById("showTTT");
+		sumContainer.textContent = sumValue;
+	  
+	  	var table = document.getElementById(tableID);
+		var rowCount = table.rows.length;
+		var colCount = table.rows[1].cells.length;		
+          for (var i = 0; i < colCount; i++) {            
+           // alert("i=" + i + ", value = " + table.rows[1].cells[i].value);			
+          }		
+	  }
+	  function addRow2(tableID) {
+        var table = document.getElementById(tableID);
+        var rowCount = table.rows.length;
+        if (rowCount < 6) {
+          // limit the user from creating fields more than your limits
+          var row = table.insertRow(rowCount);
+
+          var colCount = table.rows[1].cells.length;
+          row.id = "rowA_" + rowCount;
+          for (var i = 0; i < colCount; i++) {
+            var newcell = row.insertCell(i);
+            newcell.outerHTML = table.rows[1].cells[i].outerHTML;
+          }
+          var listitems = row.querySelectorAll("input, select");
+
+          for (i = 0; i < listitems.length; i++) {
+            listitems[i].setAttribute("oninput", "calculate2('" + row.id + "')");							
+			
+			listitems[1].setAttribute("onChange", "view('" + row.id + "')");
+			
+			listitems[8].setAttribute("onClick", "deleteF('" + row.id + "')");
+			listitems[8].setAttribute("value", "x");
+			listitems[8].removeAttribute("hidden");
+          }
+        } else {
+          alert("超薦大牌最多登記五位");
+        }
+      }
+	  function addRow3(tableID) {
+        var table = document.getElementById(tableID);
+        var rowCount = table.rows.length;
+        if (rowCount < 11) {
+          // limit the user from creating fields more than your limits
+          var row = table.insertRow(rowCount);
+
+          var colCount = table.rows[1].cells.length;
+          row.id = "rowB_" + rowCount;
+          for (var i = 0; i < colCount; i++) {
+            var newcell = row.insertCell(i);
+            newcell.outerHTML = table.rows[1].cells[i].outerHTML.replace("亡者稱謂", "亡者稱謂 " + rowCount);
+			//var subCount = document.getElementById("subCount");
+			//subCount.textContent = rowCount;
+          }
+          var listitems = row.querySelectorAll("input, select");
+
+          for (i = 0; i < listitems.length; i++) {
+            listitems[i].setAttribute("oninput", "calculate3('" + row.id + "')");							
+			listitems[1].setAttribute("onChange", "view('" + row.id + "')");
+			
+			listitems[1].setAttribute("onChange", "view('" + row.id + "')");
+			
+			listitems[3].setAttribute("onClick", "deleteF('" + row.id + "')");
+			listitems[3].setAttribute("value", "x");
+			listitems[3].removeAttribute("hidden");
+			
+			
+          }
+        } else {
+          alert("超薦小牌最多登記十位");
+        }
+      }
+	  
+	  function addRow4(tableID) {
+        var table = document.getElementById(tableID);
+        var rowCount = table.rows.length;
+        if (rowCount < 6) {
+          // limit the user from creating fields more than your limits
+          var row = table.insertRow(rowCount);
+
+          var colCount = table.rows[1].cells.length;
+          row.id = "rowC_" + rowCount;
+          for (var i = 0; i < colCount; i++) {
+            var newcell = row.insertCell(i);
+            newcell.outerHTML = table.rows[1].cells[i].outerHTML;
+			//var subCount = document.getElementById("subCount");
+			//subCount.textContent = rowCount;
+          }
+          var listitems = row.querySelectorAll("input, select");
+
+          for (i = 0; i < listitems.length; i++) {
+            listitems[i].setAttribute("oninput", "calculate4('" + row.id + "')");							
+			
+			listitems[1].setAttribute("onChange", "view('" + row.id + "')");
+			
+			listitems[3].setAttribute("onClick", "deleteF('" + row.id + "')");
+			listitems[3].setAttribute("value", "x");
+			listitems[3].removeAttribute("hidden");
+			
+			
+          }
+        } else {
+          alert("消災大牌最多登記五位");
+        }
+      }
+	  
+	  function addRow5(tableID) {
+        var table = document.getElementById(tableID);
+        var rowCount = table.rows.length;
+        if (rowCount < 11) {
+          // limit the user from creating fields more than your limits
+          var row = table.insertRow(rowCount);
+
+          var colCount = table.rows[1].cells.length;
+          row.id = "rowD_" + rowCount;
+          for (var i = 0; i < colCount; i++) {
+            var newcell = row.insertCell(i);
+            newcell.outerHTML = table.rows[1].cells[i].outerHTML;
+			//var subCount = document.getElementById("subCount");
+			//subCount.textContent = rowCount;
+          }
+          var listitems = row.querySelectorAll("input, select");
+
+          for (i = 0; i < listitems.length; i++) {
+            listitems[i].setAttribute("oninput", "calculate5('" + row.id + "')");							
+			
+			listitems[1].setAttribute("onChange", "view('" + row.id + "')");
+			
+			listitems[3].setAttribute("onClick", "deleteF('" + row.id + "')");
+			listitems[3].setAttribute("value", "x");
+			listitems[3].removeAttribute("hidden");
+			
+			
+          }
+        } else {
+          alert("消災小牌最多登記十位");
+        }
+      }
+	  
+	  function calculateOld(elementID) {
+        var mainRow = document.getElementById(elementID);
+        var myBox1 = mainRow.querySelectorAll("[name=qty]")[0].value;
+        var myBox3 = mainRow.querySelectorAll("[name^=sel]")[0].value;
+        var total = mainRow.querySelectorAll("[name=total]")[0];
+        var myResult1 = myBox1 * myBox3;
+        total.value = myResult1;
+
+        // calculate the totale of every total
+        var sumContainer = document.getElementById("totalOfTotals");
+        var totalContainers = document.querySelectorAll("[name=total]"),
+          i;
+        var sumValue = 0;
+        for (i = 0; i < totalContainers.length; ++i) {
+          sumValue += parseInt(totalContainers[i].value);
+        }
+        sumContainer.textContent = sumValue;
+      }
+	  
+	  
+      function calculateNewVersionExample(elementID) {
+        var mainRow = document.getElementById(elementID);
+        var myBox1 = mainRow.querySelectorAll("[name=mainName]")[0].value;
+		var myResult1 = 0;
+		if (myBox1.length > 0){
+		   myResult1 = 1000;
+		} else {
+		   myResult1 = 0;
+		}
+
+        // calculate the totale of every total
+        var sumContainer = document.getElementById("totalOfTotals");
+        var totalContainers = document.querySelectorAll("[name=total]"),
+          i;
+        var sumValue = 0;
+        for (i = 0; i < totalContainers.length; ++i) {
+          sumValue += parseInt(totalContainers[i].value);
+        }
+		sumContainer.textContent = Number(sumContainer.textContent) + myResult1;
+      }
+	  
+		function calculate(elementID) {//懺主
+        var sumContainer = document.getElementById("totalOfTotals");
+		var csumContainer = document.getElementById("ctotalOfTotals");
+		var myBox1 = document.querySelectorAll("[name=mainName]");
+          i;
+        var sumValue = 0;
+        for (i = 0; i < myBox1.length; ++i) {
+		  if (myBox1[i].value.length > 0){
+            sumValue += 1000;
+		  }
+        }		
+		sumContainer.textContent = sumValue;
+		var sumContainer999 = document.getElementById("totalOfTotals999");
+		var sumContainer111 = document.getElementById("totalOfTotals").textContent;
+		var sumContainer222 = document.getElementById("totalOfTotals2").textContent;
+		var sumContainer333 = document.getElementById("totalOfTotals3").textContent;
+		var sumContainer444 = document.getElementById("totalOfTotals4").textContent;
+		sumContainer999.textContent = Number(sumContainer111) + Number(sumContainer222) + Number(sumContainer333) + Number(sumContainer444);
+		csumContainer.textContent = " (" + i + ")";
+      }
+	  
+     function calculate2(elementID) {
+        var sumContainer = document.getElementById("totalOfTotals2");
+		var csumContainer = document.getElementById("ctotalOfTotals2");
+		var myBox1 = document.querySelectorAll("[name=mainName2]");
+          i;
+        var sumValue = 0;
+        for (i = 0; i < myBox1.length; ++i) {
+		  if (myBox1[i].value.length > 0){
+            sumValue += 500;
+		  }
+        }
+		sumContainer.textContent = sumValue;
+		
+		var sumContainer999 = document.getElementById("totalOfTotals999");
+		var sumContainer111 = document.getElementById("totalOfTotals").textContent;
+		var sumContainer222 = document.getElementById("totalOfTotals2").textContent;
+		sumContainer999.textContent = Number(sumContainer111) + Number(sumContainer222);
+		csumContainer.textContent = " (" + i + ")";		
+		
+      }
+	  
+	  function calculate3(elementID) {
+        var sumContainer = document.getElementById("totalOfTotals3");
+		var csumContainer = document.getElementById("ctotalOfTotals3");
+		var myBox1 = document.querySelectorAll("[name=mainName3");
+          i;
+        var sumValue = 0;
+        for (i = 0; i < myBox1.length; ++i) {
+		  if (myBox1[i].value.length > 0){
+            sumValue += 100;
+		  }
+        }
+		sumContainer.textContent = sumValue;
+		
+		var sumContainer999 = document.getElementById("totalOfTotals999");
+		var sumContainer111 = document.getElementById("totalOfTotals").textContent;
+		var sumContainer222 = document.getElementById("totalOfTotals2").textContent;
+		var sumContainer333 = document.getElementById("totalOfTotals3").textContent;
+		sumContainer999.textContent = Number(sumContainer111) + Number(sumContainer222) + Number(sumContainer333);
+		csumContainer.textContent = " (" + i + ")";
+		
+      }
+	  
+	  function calculate4(elementID) {
+        var sumContainer = document.getElementById("totalOfTotals4");
+		var csumContainer = document.getElementById("ctotalOfTotals4");
+		var myBox1 = document.querySelectorAll("[name=mainName4");
+          i;
+        var sumValue = 0;
+        for (i = 0; i < myBox1.length; ++i) {
+		  if (myBox1[i].value.length > 0){
+            sumValue += 500;
+		  }
+        }
+		sumContainer.textContent = sumValue;
+		
+		var sumContainer999 = document.getElementById("totalOfTotals999");
+		var sumContainer111 = document.getElementById("totalOfTotals").textContent;
+		var sumContainer222 = document.getElementById("totalOfTotals2").textContent;
+		var sumContainer333 = document.getElementById("totalOfTotals3").textContent;
+		var sumContainer444 = document.getElementById("totalOfTotals4").textContent;
+		sumContainer999.textContent = Number(sumContainer111) + Number(sumContainer222) + Number(sumContainer333) + Number(sumContainer444);
+		csumContainer.textContent = " (" + i + ")";
+		
+      }
+	  
+	  function calculate5(elementID) {
+        var sumContainer = document.getElementById("totalOfTotals5");
+		var csumContainer = document.getElementById("ctotalOfTotals5");
+		var myBox1 = document.querySelectorAll("[name=mainName5");
+          i;
+        var sumValue = 0;
+        for (i = 0; i < myBox1.length; ++i) {
+		  if (myBox1[i].value.length > 0){
+            sumValue += 500;
+		  }
+        }
+		sumContainer.textContent = sumValue;
+		
+		var sumContainer999 = document.getElementById("totalOfTotals999");
+		var sumContainer111 = document.getElementById("totalOfTotals").textContent;
+		var sumContainer222 = document.getElementById("totalOfTotals2").textContent;
+		var sumContainer333 = document.getElementById("totalOfTotals3").textContent;
+		var sumContainer444 = document.getElementById("totalOfTotals4").textContent;
+		var sumContainer555 = document.getElementById("totalOfTotals5").textContent;
+		sumContainer999.textContent = Number(sumContainer111) + Number(sumContainer222) + Number(sumContainer333) + Number(sumContainer444) + Number(sumContainer555);
+		csumContainer.textContent = " (" + i + ")";
+		
+      }
+	
+	  
+	  function deleteF(elementID) {	 
+	    document.getElementById(elementID).outerHTML="";
+        calculate(elementID);
+		calculate2(elementID);
+		calculate3(elementID);
+		calculate4(elementID);
+		calculate5(elementID);
+      }
+	  
+	  function view(elementID) {	 
+	     var mainRow = document.getElementById(elementID);
+	     var myBox1 = mainRow.querySelectorAll("[name^=sel]");
+          i;
+        var sumValue = "";
+        for (i = 0; i < myBox1.length; ++i) {
+		  if (myBox1[i].value.length > 0){
+             //alert("i=" + i + ", value = " + myBox1[i].value);	
+			 sumValue += " " + myBox1[i].value;
+			 break;
+		  }
+        }
+		
+		
+		var mainRow = document.getElementById(elementID);
+        var myName1 = mainRow.querySelectorAll("[name=dname1]")[0];
+		myName1.value="";		
+		
+		if (sumValue.trim().substring(0,4).indexOf('自行填寫') == 0){
+		   myName1.setAttribute("placeholder", "(信徒輸入名字)");
+		} else if (sumValue.trim().substring(0,1).indexOf('①') == 0){
+		   myName1.setAttribute("placeholder", "(信徒輸入姓氏)");
+        } else if (sumValue.trim().substring(0,1).indexOf('②') == 0){
+		   myName1.setAttribute("placeholder", "(信徒輸入地址)");
+		} else if (sumValue.trim().substring(0,1).indexOf('③') == 0){
+		   myName1.value = "(累劫冤親債主)";
+		} else if (sumValue.trim().substring(0,1).indexOf('④') == 0){
+		   myName1.value = "(十方法界一切眾生)";
+		} else if (sumValue.trim().substring(0,1).indexOf('⑤') == 0){
+		   myName1.value = "(無人祭祀孤魂等眾)";
+		} else if (sumValue.trim().substring(0,1).indexOf('⑥') == 0){
+		   myName1.value = "(未出世子女)";
+		}
+		/*
+		               
+            sumValue.trim().substring(0,1).indexOf('') == 0 ||
+            sumValue.trim().substring(0,1).indexOf('') == 0 ||
+		    sumValue.trim().substring(0,1).indexOf('') == 0							
+		){
+		*/
+		    //alert(sumValue.trim().substring(0,1));
+		//	myName1.value = sumValue.trim().substring(1);					
+      }	  
+	  
+	  function getDocHeight() {	// $(document).height() value depends on browser
+        var D = document;
+        return Math.max(
+          D.body.scrollHeight, D.documentElement.scrollHeight,
+          D.body.offsetHeight, D.documentElement.offsetHeight,
+          D.body.clientHeight, D.documentElement.clientHeight
+       );
+     }
+	</script>
+		 	
+</head> 
+  
+<body> 
+    <h1>佛光山佛香講堂-孝道月梁皇法會(一)功德線上登記 v0.2</h1> 
+    <h3>孝道月梁皇法會(一)功德登記說明</h3> 
+  
+    <div id="gfg"> 
+        <ul> 
+            <li><a href="#gfg1">登記方法說明</a></li> 
+            <li><a href="#gfg2">捐款者資料及功德項目</a></li> 
+            <li><a href="#gfg3">功德資料細節</a></li>
+            <li><a href="#gfg4">資料</a></li>
+            <li><a href="#gfg5">確認與上傳繳付憑證</a></li>
+        </ul> 
+  
+        <div id="gfg1"> 
+             <h3>孝道月梁皇法會(一)功德登記說明</h3>
+    	<p>		
+		<div id="script1">&nbsp; &nbsp; &nbsp; &nbsp;依此懺法至誠禮懺，則可消除宿業，並可將禮佛功德，迴向現世父母，福壽綿延，歷代先遠考妣宗親蓮品增上，可謂生亡兩利功德無量。因應新冠肺炎疫情防疫政策，有意登記法會功德者，透過佛香講堂提供簡便、快速登記的方法：「轉帳、轉數快、及郵寄支票」，祈願疫情早日消除，大眾安樂富有。</div>
+		<div id="script2">
+		<pre>
+孝道月梁皇法會(一)功德登記說明
+功德說明：
+
+(一) 登記法會會主及壇主功德，請致電2715 7933查詢。
+(二) 登記懺主、超薦大、小牌、消災大、小牌及隨喜打齋可於線上辦理。
+
+
+線上辦理繳費辦法：
+
+(一) 轉數快
+       FO GUANG SHAN INTL BUD PRO SOC(HK) LTD
+       之系統識別碼為:165036468
+     
+       請先行以轉數快方式，存入相關功德款，於進行轉帳時，
+       在備註欄上，填上姓名/電話/佛光卡，並進行拍照/截圖。
+       然後填寫本表格，並需上傳憑證至
+       WhatsApp 9485 7461；或
+
+(二) 銀行戶口轉帳
+        帳戶號碼：331-14-18690-6
+        帳戶名稱：佛光山佛香講堂有限公司 (中文)    
+                           FO GUANG SHAN INTERNATIONAL
+                           BUDDHIST PROGRESS SOCIETY
+                           (HONG KONG) LIMITED (英文)
+         銀行：上海商業銀行 
+                     SHANGHAI COMMERCIAL BANK LTD
+         
+         存入相關功德款，在入數單上註明姓名/電話/佛光卡，
+         並進行拍照/截圖。 然後填寫本表格，並需上傳憑證至
+         WhatsApp 9485 7461；或
+
+(三)  以支票繳費者，請先填寫本表格，並於支票後方寫上
+         姓名、電話、填表日期及功德項目，郵寄至以下地址。
+         支票抬頭：佛光山佛香講堂有限公司
+         郵寄地址：九龍窩打老道84號冠華園二樓A座
+
+如有查詢，請致電2715 7933或 WhatsApp 至 9485 7461。
+
+本人了解並同意佛光山寺及派下各單位得將本人所填寫的個人資料蒐集、處理、使用在功德徵信、法會、活
+動及未來各項活動通知、帳務處理與功德主提報等作業。且本人提供予道場之資料若包含本人以外之個人資
+料時，本人已以適當方式使該人等知悉其個人資料會提供予佛光山寺派下相關單位，進行蒐集、處理或利用。</pre></div>
+<br>
+        <input type="button" id="btnShow" value="登記開始" disabled onClick="ff()"/>
+		<!--
+		<input type="checkbox" id="chk1" name="chk1" value="Right"> 
+		<div class="input-group">
+                   <span for="text1">姓名</span>
+                   <input type="text" placeholder="姓名" id="text1" required="required">
+                </div>
+				-->
+		</p>	      												
+   
+        </div> 
+  
+        <div id="gfg2"> 
+            <h3>請輸入捐款人資料後，選擇相關功德類別，並填寫所需登記內容。</h3>
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </div> 
+  
+        <div id="gfg3"> 
+            <label for="tabthree1">懺主</label>
+            <div class="tab">
+			   <h1>Third Tab Content 1</h1>
+               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+	        </div>
+		 <input type="radio" name="tabthree2" id="tabone">
+         <label for="tabthree2">超薦大牌</label>
+            <div class="tab">
+			   <h1>Third Tab Content 2</h1>
+               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>			
+	        </div>			
+		 <input type="radio" name="tabthree3" id="tabone">
+         <label for="tabthree3">超薦小牌</label>
+            <div class="tab">
+	        </div>			
+		 <input type="radio" name="tabthree3" id="tabone">
+         <label for="tabthree3">消災大牌</label>
+            <div class="tab">
+	        </div>			
+		 <input type="radio" name="tabthree3" id="tabone">
+         <label for="tabthree3">消災小牌</label>
+            <div class="tab">
+	        </div>			
+		 <input type="radio" name="tabthree3" id="tabone">
+         <label for="tabthree3">隨喜打齋</label>
+            <div class="tab">
+	        </div>						
+		 <input type="radio" name="tabthree3" id="tabone">
+         <label for="tabthree3">登記功德結算支付</label>
+            <div class="tab">
+	        </div>									
+	    </div>		
+        <div id="gfg4"> 
+              <span style="font-size:11.0pt">懺主總金額 HK$</span>
+  <span style="font-size:11.0pt" id="totalOfTotals">0</span><span style="font-size:11.0pt" id="ctotalOfTotals"></span>
+  <span style="font-size:11.0pt">+ 超薦大牌總金額 HK$</span>
+  <span style="font-size:11.0pt" id="totalOfTotals2">0</span><span style="font-size:11.0pt" id="ctotalOfTotals2"></span>
+  <span style="font-size:11.0pt">+ 超薦小牌總金額 HK$</span>
+  <span style="font-size:11.0pt" id="totalOfTotals3">0</span><span style="font-size:11.0pt" id="ctotalOfTotals3"></span>  
+  <span style="font-size:11.0pt">+ 消災大牌總金額 HK$</span>
+  <span style="font-size:11.0pt" id="totalOfTotals4">0</span><span style="font-size:11.0pt" id="ctotalOfTotals4"></span> 
+  <span style="font-size:11.0pt">+ 消災小牌總金額 HK$</span>
+  <span style="font-size:11.0pt" id="totalOfTotals5">0</span><span style="font-size:11.0pt" id="ctotalOfTotals5"></span><br>  
+  <span style="font-size:13.0pt">登記總金額 HK$</span>
+  <span style="font-size:13.0pt" id="totalOfTotals999">0</span>
+  <button class="collapsible" style="background-color: #85B7F3;">懺主&nbsp; &nbsp; &nbsp; &nbsp; (1支-HK$1000 最多三支)</button>                                                                 
+   <div class="content" id="myDIV">
+	<div class="row">
+   <div class="col-md-12">
+   <img src="images/1.png" class="center"><br>
+    <input type="button" value="+增加懺主" onClick="addRow('dataTable')" />
+    <input type="button" class="btnShow" value="Show" onClick="showRowTTT('dataTable')" />
+    <table id="dataTable" class="form1" border="1">
+      <tbody>
+	  <!--
+       <th width="10%">
+         <span style="font-size:12.0pt">懺主(一)登記</span><br>
+         <span style="font-size:7.0pt">請填寫第一名懺主內容。<span><br><br>
+         <span style="font-size:9.0pt">文疏姓名 (1名)</span>
+       </th>
+       <th width="7%">
+         <span style="font-size:9.0pt">稱謂1</span>
+       </th>
+       <th width="10%">
+         亡者1
+       </th>
+       <th width="20%">
+         稱謂2
+       </th>
+       <th width="10%">
+         亡者2
+       </th>
+       <th width="7%">
+         稱謂3
+       </th>
+       <th width="10%">
+         亡者3
+       </th>
+	   <th width="10%">
+	     陽上姓名 (同輩最多3名)
+	    </th>	 
+       <th width="3%">
+       </th>
+	   -->
+        <tr id="row_0">
+          <p>
+            <td width="10%">    			
+			   <input type="checkbox" name="skillset" value="chk1" /><label>1 冤親債主</label>
+			   <input type="checkbox" name="skillset" value="chk2" /><label>2 無人祭祀孤魂等眾</label>
+			   <input type="checkbox" name="skillset" value="chk3" /><label>3 十方法界一切眾生</label><br>
+			   <input type="checkbox" name="skillset" value="chk4" /><label>4 地基主</label><br>
+			   <input type="checkbox" name="skillset" value="chk5" /><label>5 (稱謂:</label>		
+              <input
+			    size="20%"
+                type="text"
+                required="required"
+                name="mainName"
+                oninput="calculate('row_0')"
+              />) <label>亡者:</label>
+			  <input
+			    size="20%"
+                type="text"
+                required="required"
+                name="mainName"
+                oninput="calculate('row_0')"
+              /><label>（已婚/未婚）</label> <br>
+			  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(稱謂:</label>		
+              <input
+			    size="20%"
+                type="text"
+                required="required"
+                name="mainName"
+                oninput="calculate('row_0')"
+              />) <label>亡者:</label>
+			  <input
+			    size="20%"
+                type="text"
+                required="required"
+                name="mainName"
+                oninput="calculate('row_0')"
+              /><label>（已婚/未婚）</label> <br>
+			  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(稱謂:</label>		
+              <input
+			    size="20%"
+                type="text"
+                required="required"
+                name="mainName"
+                oninput="calculate('row_0')"
+              />) <label>亡者:</label>
+			  <input
+			    size="20%"
+                type="text"
+                required="required"
+                name="mainName"
+                oninput="calculate('row_0')"
+              /><label>（已婚/未婚）</label><br>
+			  <label>陽上（選項1-4陽上一位;選項5陽上最多三位同輩份</label><br>
+			  1. <input
+			    size="20%"
+                type="text"
+                required="required"
+                name="mainName"
+                oninput="calculate('row_0')"
+              />)
+			  2. <input
+			    size="20%"
+                type="text"
+                required="required"
+                name="mainName"
+                oninput="calculate('row_0')"
+              />
+			  3. <input
+			    size="20%"
+                type="text"
+                required="required"
+                name="mainName"
+                oninput="calculate('row_0')"
+              />
+			
+            </td>
+			<!--
+            <td width="20%">       			              
+			  <input list="selList" id="sel" name="sel" autocomplete="on" onChange="view('row_0')" placeholder="請選擇稱謂" value="" style="width: 95px;">               			   
+			  <datalist id="selList"> 
+			 
+			    <option value="自行填寫">自行填寫</option>
+                <option value="①祖先">①祖先</option>
+                <option value="②地基主">②地基主</option>
+                <option value="③冤親債主">③冤親債主</option>
+                <option value="④十方法界">④十方法界</option>
+				<option value="⑤無人祭祀">⑤無人祭祀</option>
+				<option value="⑥未出世子女">⑥未出世子女</option>
+             
+			  </datalist>	-->
+           <!--			  
+            </td>		
+             <td width="12%">  
+              <input
+			    size="12%"
+                type="text"
+                required="required"
+                class="small"
+                name="dname1"
+				placeholder="(信徒輸入名字)"
+              />
+            </td>
+             <td width="7%">  
+              <input
+			    size="10%"
+                type="text"
+                required="required"
+                class="small"
+                name="dtitle2"
+              />	
+            </td>
+             <td width="10%">  
+              <input
+			    size="10%"
+                type="text"
+                required="required"
+                class="small"
+                name="dname2"
+              />
+            </td>
+             <td width="7%">  
+             <input
+			    size="10%"
+                type="text"
+                required="required"
+                class="small"
+                name="dtitle3"
+              />	
+            </td>
+			 <td width="10%">  
+              <input
+			    size="10%"
+                type="text"
+                required="required"
+                class="small"
+                name="dname3"
+              />
+            </td>
+			<td width="10%">  
+              <input
+			    size="10%"
+                type="text"
+                required="required"
+                class="small"
+                name="dname4"
+              />
+            </td>
+			 <td width="3%">   
+			  <input hidden
+			    size="3%"				
+                type="button"				
+				value=""
+                required="required"
+                name="btnDelete" 			
+              />
+			 </td>	
+             -->
+		 </p>
+        </tr>
+      </tbody>
+    </table>
+    <div>
+      <tr>
+        <span style="visibility:hidden;">登記懺主總金額 HK$</span>
+        <span style="visibility:hidden;" id="totalOfTotals">0</span><br>
+		<!--
+		<span id="totalOfTotals3">0</span>
+		<span id="showTTT">0</span>
+		-->
+      </tr>
+    </div>
+  </div>
+  </div>
+  </div>
+  
+  <br>
+  
+  <button class="collapsible" style="background-color: #64AEF5;">超薦大牌 (1支- HK$500 最多五支)</button>
+  <div class="content" id="myDIV">
+  <div class="row">
+   <div class="col-md-12">
+   <img src="images/2.png" class="center"><br>	   
+    <input type="button" value="+增加超薦大牌" onClick="addRow2('dataTable2')" />
+	<input type="button" class="btnShow" value="Show" onClick="showRow('dataTable2')" />
+    <table id="dataTable2" class="form1" border="0">
+      <tbody>
+       <th width="10%">        
+         登記
+       </th>
+       <th width="7%">
+         稱謂1
+       </th>
+       <th width="10%">
+         亡者1
+       </th>
+       <th width="7%">
+         稱謂2
+       </th>
+       <th width="10%">
+         亡者2
+       </th>
+       <th width="7%">
+         稱謂3
+       </th>
+       <th width="10%">
+         亡者3
+       </th>
+	   <th width="10%">
+	     陽上姓名 (同輩最多3名)
+	    </th>	 	   
+       <th width="3%">
+       </th>
+        <tr id="rowA_0">
+          <p>
+            <td width="10%">             
+              <input
+			    size="8%"
+                type="text"
+                required="required"
+                name="mainName2"
+                oninput="calculate2('rowA_0')"
+              />
+            </td>
+            <td width="7%">       
+			  <!--
+			  <input list="selList" id="sel" name="sel" onChange="view('rowA_0')" placeholder="請選擇稱謂" value="" style="width: 95px;">               			   
+			  <datalist id="selList">
+			  -->
+              <select name="sel" id="sel" onChange="view('rowA_0')" style="width: 100px;">
+                <option value="自行填寫">自行填寫</option>
+                <option value="①祖先">①祖先</option>
+                <option value="②地基主">②地基主</option>
+                <option value="③冤親債主">③冤親債主</option>
+                <option value="④十方法界">④十方法界</option>
+				<option value="⑤無人祭祀">⑤無人祭祀</option>
+				<option value="⑥未出世子女">⑥未出世子女</option>
+              <!-- </select> -->
+			  </datalist>			              
+            </td>		
+             <td width="12%">  
+              <input
+			    size="12%"
+                type="text"
+                required="required"
+                class="small"
+                name="dname1"
+              />
+            </td>
+             <td width="7%">  
+              <input
+			    size="10%"
+                type="text"
+                required="required"
+                class="small"
+                name="dtitle2"
+              />	
+            </td>
+             <td width="10%">  
+              <input
+			    size="10%"
+                type="text"
+                required="required"
+                class="small"
+                name="dname2"
+              />
+            </td>
+             <td width="7%">  
+             <input
+			    size="10%"
+                type="text"
+                required="required"
+                class="small"
+                name="dtitle3"
+              />	
+            </td>
+			 <td width="10%">  
+              <input
+			    size="10%"
+                type="text"
+                required="required"
+                class="small"
+                name="dname3"
+              />            
+			<td width="10%">  
+              <input
+			    size="10%"
+                type="text"
+                required="required"
+                class="small"
+                name="dname4"
+              />
+            </td>
+			 <td width="3%">   
+			  <input hidden
+			    size="3%"
+                type="button"
+				value=""
+                required="required"
+                name="btnDelete" 			
+              />
+			 </td>	
+          </p>
+        </tr>
+      </tbody>
+    </table>
+    <div>
+      <tr>
+        <span style="visibility:hidden;">登記超薦大牌總金額 HK$</span>
+        <span style="visibility:hidden;" id="totalOfTotals2">0</span>
+      </tr>
+    </div>
+  </div>
+  </div>
+  </div>
+  
+ <br>
+  
+  <button class="collapsible" style="background-color: #64AEF5;">超薦小牌 (1支- HK$100 最多十支)</button>
+  <div class="content" id="myDIV">
+  <div class="row">
+   <div class="col-md-12">
+   <img src="images/3.png" class="center"><br>	   
+   請填寫陽上與亡者之關係的稱讚,或可搷寫稱讚選項的數字代碼：①祖先②地基主③冤親債主④十方法界⑤無人祭祀⑥未出世子女.<br>
+    <input type="button" value="+增加超薦小牌" onClick="addRow3('dataTable3')" />
+	<input type="button" class="btnShow" value="Show" onClick="showRow('dataTable3')" />
+    <table id="dataTable3" class="form1" border="0">
+      <tbody>
+	  <!--
+       <th width="20%" align="left">
+         亡者稱謂<strong style="color: red;">*</strong>
+       </th>
+       <th width="60%" align="left">
+         超薦亡者
+       </th>
+       <th width="20%">
+        
+       </th>         
+	   -->
+       <th width="3%">
+       </th>
+        <tr id="rowB_0" width="80%">
+          <p>
+            <td width="20%">        
+			  <span id="subCount"></span>
+			  亡者稱謂<strong style="color: red;">*</strong><br>
+              <input
+			    size="13%"
+                type="text"
+                required="required"
+                name="mainName3"
+                oninput="calculate3('rowB_0')"
+              /> <br>
+			  <span style="font-size:9.0pt">或者填寫稱謂代碼</span><br>
+			   陽上姓名 (1名)<strong style="color: red;">*</strong>
+			  <input
+			    size="20%"
+                type="text"
+                required="required"
+                class="small"
+                name="dname2"
+              /> 
+			  
+            </td>
+            <td width="62%" style="vertical-align:top">        
+			  超薦亡者<br>
+              <input
+			    size="60%"
+                type="text"
+                required="required"
+                class="small"
+                name="dname1"
+              /><br>
+			  <span style="font-size:9.0pt">超薦①祖先, 請填寫姓氏; 超薦②地基主, 請填寫詳細地址</span><br>
+            </td>	
+             
+			 <td width="3%">   
+			  <input hidden
+			    size="3%"
+                type="button"
+				value=""
+                required="required"
+                name="btnDelete" 			
+              />			  
+			 </td>				 
+          </p>		  
+        </tr>
+      </tbody>
+    </table>
+    <div>
+      <tr>
+        <span style="visibility:hidden;">登記超薦小牌總金額 HK$</span>
+        <span style="visibility:hidden;" id="totalOfTotals3">0</span>
+      </tr>
+    </div>
+  </div>
+  </div>
+  </div> 
+  
+  <br>
+  
+  <button class="collapsible" style="background-color: #64AEF5;">消災大牌 (1支-HK$500 最多五支)</button>
+  <div class="content" id="myDIV">
+  <div class="row">
+   <div class="col-md-12">
+    <h2>消災大牌登記</h2>
+    眷屬姓名 (1-6名)或公司名稱(1名)<br>
+    <input type="button" value="+增加消災大牌" onClick="addRow4('dataTable4')" />
+	<input type="button" class="btnShow" value="Show" onClick="showRow('dataTable4')" />
+    <table id="dataTable4" class="form1" border="1">
+      <tbody>
+       <th width="10%">                    
+		 姓名<strong style="color: red;">*</strong>
+       </th>
+       <th width="30%">
+         稱謂
+       </th>
+       <th width="80%">
+         YYY
+       </th>         
+       <th width="3%">
+       </th>
+        <tr id="rowC_0">
+          <p>
+            <td width="10%">        
+			  <span id="subCount"></span>
+              <input
+			    size="8%"
+                type="text"
+                required="required"
+                name="mainName4"
+                oninput="calculate4('rowC_0')"
+              />
+            </td>
+            <td width="82%">        
+              <input
+			    size="80%"
+                type="text"
+                required="required"
+                class="small"
+                name="dname1"
+              />
+            </td>	
+             <td width="9%">  
+              <input
+			    size="7%"
+                type="text"
+                required="required"
+                class="small"
+                name="dname2"
+              />           
+            </td>
+			 <td width="3%">   
+			  <input hidden
+			    size="3%"
+                type="button"
+				value=""
+                required="required"
+                name="btnDelete" 			
+              />
+			 </td>	
+          </p>
+        </tr>
+      </tbody>
+    </table>
+    <div>
+      <tr>
+	    &nbsp; &nbsp; &nbsp;
+        <span style="visibility:hidden;">登記消災大牌總金額 HK$</span>
+        <span  style="visibility:hidden;"id="totalOfTotals4">0</span>
+      </tr>
+    </div>
+  </div>
+  </div>
+  </div>
+  <br>
+  
+  <button class="collapsible" style="background-color: #64AEF5;">消災小牌 (1支-HK$500 最多十支)</button>
+  <div class="content" id="myDIV">
+  <div class="row">
+   <div class="col-md-12">
+    <h2>消災小牌登記</h2>
+    填寫個人名：公司及合家不可。<br>
+    <input type="button" value="+增加消災小牌" onClick="addRow5('dataTable5')" />
+	<input type="button" class="btnShow" value="Show" onClick="showRow('dataTable4')" />
+    <table id="dataTable5" class="form1" border="1">
+      <tbody>
+       <th width="10%">                    
+		 姓名<strong style="color: red;">*</strong>
+       </th>
+       <th width="30%">
+         稱謂
+       </th>
+       <th width="7%">
+         YYY
+       </th>         
+       <th width="3%">
+       </th>
+        <tr id="rowC_0">
+          <p>
+            <td width="10%">        
+			  <span id="subCount"></span>
+              <input
+			    size="8%"
+                type="text"
+                required="required"
+                name="mainName5"
+                oninput="calculate5('rowD_0')"
+              />
+            </td>
+            <td width="32%">        
+              <input
+			    size="30%"
+                type="text"
+                required="required"
+                class="small"
+                name="dname1"
+              />
+            </td>	
+             <td width="9%">  
+              <input
+			    size="7%"
+                type="text"
+                required="required"
+                class="small"
+                name="dname2"
+              />           
+            </td>
+			 <td width="3%">   
+			  <input hidden
+			    size="3%"
+                type="button"
+				value=""
+                required="required"
+                name="btnDelete" 			
+              />
+			 </td>	
+          </p>
+        </tr>
+      </tbody>
+    </table>
+    <div>
+      <tr>
+	    &nbsp; &nbsp; &nbsp;
+        <span style="visibility:hidden;">登記消災小牌總金額 HK$</span>
+        <span  style="visibility:hidden;"id="totalOfTotals5">0</span>
+      </tr>
+    </div>
+  </div>  
+  </div>
+  
+  </div> 
+  
+  <!-- END -->
+        </div> 
+        <div id="gfg5"> 
+            <h1>登記功德總金額</h1>
+    <p>繳付方式 *<br>
+	   轉數快<br>
+	   銀行戶口轉帳<br>
+	   郵寄支票 (支票枱頭: 佛光山佛香講堂有限公司)</p><br>
+	   <div class="input-group">
+            <span for="demo_name">姓名</span>
+              <input type="text" placeholder="姓名" id="demo_name" required="required">
+           </div>		
+	   <button type="button" id="submit" class="button-primary u-full-width">確認送出</button>
+        </div>
+    </div> 
+</body> 
+<!--<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
+  <script>
+    $(function() {
+      $('#Xsubmit').on('click', function() {
+        
+        // 姓名
+		if ($('#demo_name').val().length == 0){
+		   alert('請輸入捐款人全名');
+		   /*
+		   var tabone = document.getElementById('tabone');
+		   tabone.setAttribute("checked", true);
+		   $('#demo_name').focus();
+		   */
+		   return false;
+		}
+        var name = $('#demo_name').val() || '未填寫';
+
+        // 性別
+		/*
+        var sex = function() {
+          var v;
+          $('[name="demo_radio"]').each(function() {
+            if($(this).prop('checked') === true) v = $(this).val();
+          });
+          return v;
+        };
+		*/
+
+        // 類別
+        var title = "title"; //$('#demo_select').val() || '未填寫';
+
+        // 內容
+        //var msg = $('#demo_textarea').val() || '未填寫';
+
+        // post
+        var data = {		         
+          'entry.1253435296': name,  //捐款人全名 
+          'entry.2138990295': name, //佛光卡號碼(如適用)
+          'entry.961818793': name,  //聯絡人：姓名 / 電話 (如適用) 
+        };
+        $.ajax({
+          type: 'POST',		         		            						
+			url: 'https://docs.google.com/forms/d/e/1FAIpQLSdV1LOCgF3V3Pb2b5yqBRpxSPRZniMYaINpmM5JSXBEckpOyg/formResponse',
+          data: data,
+          contentType: 'application/json',
+          dataType: 'jsonp',
+          complete: function() {
+            alert('資料已送出！');
+			$('#demo_name').val('');
+          }
+        });
+        
+      });
+    });
+  </script>
+  
+<!--  <script src="js/jquery.combo.select.js"></script>   -->
+  <script>
+  
+    $(document).ready(function(){
+  
+  
+  
+//var tabtwo = document.getElementById('tabtwo');
+  //tabtwo.setAttribute("hidden", true);  
+  /*
+  var tabtwo = document.getElementById('tabtwo');
+  tabtwo.setAttribute("disabled", true);  
+  var tabthree = document.getElementById('tabthree');
+  tabthree.setAttribute("disabled", true);
+  var tabfour = document.getElementById('tabfour');
+  tabfour.setAttribute("disabled", true);
+  var tabfive = document.getElementById('tabfive');
+  tabfive.setAttribute("disabled", true);
+  */
+/*   new SELECT OPTION
+		var s = $('select')
+			.comboSelect()
+			
+*/
+    // code to read selected table row cell data (values).
+    $("#dataTable").on('click','.btnShow',function(){
+         // get the current row
+         var currentRow=$(this).closest("tr"); 
+         
+         var col1=currentRow.find("td:eq(0)").html(); // get current row 1st table cell TD value
+         var col2=currentRow.find("td:eq(1)").html(); // get current row 2nd table cell TD value
+         var col3=currentRow.find("td:eq(2)").html(); // get current row 3rd table cell  TD value
+         var data=col1+"\n"+col2+"\n"+col3;
+         var sumContainer = document.getElementById("showTTT");
+
+		sumContainer.textContent = data;
+         //alert(data);
+    });
+/*	
+	$('#tab1').on('click', function() {
+		var tabtwo = document.getElementById('tabtwo');
+		tabtwo.setAttribute("disabled", false);  
+		var tabthree = document.getElementById('tabthree');
+		tabthree.setAttribute("disabled", false);
+		var tabfour = document.getElementById('tabfour');
+		tabfour.setAttribute("disabled", false);
+		var tabfive = document.getElementById('tabfive');
+		tabfive.setAttribute("disabled", false);
+	}
+	*/
+	   
+	$('#chk1').on('click', function() {
+    	    if(document.getElementById('chk1').checked) {           
+		var tabtwo = document.getElementById('tabtwo');
+                tabtwo.removeAttribute("disabled", false);
+            } else {
+                var tabtwo = document.getElementById('tabtwo');
+                tabtwo.setAttribute("disabled", true);
+            }	    
+	});
+	
+	    
+	/*    
+	$('#text').on('click', function() {
+	   	  var myBox1 = document.querySelectorAll("[name^=sel]");
+          i;
+        var sumValue = "";
+        for (i = 0; i < myBox1.length; ++i) {
+		  if (myBox1[i].value.length > 0){
+             //alert("i=" + i + ", value = " + myBox1[i].value);	
+			 sumValue += " " + myBox1[i].value;
+		  }
+        }
+		var sumContainer = document.getElementById("showZZZ");
+		sumContainer.textContent = sumValue;
+	});
+	*/
+});  
+  
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.maxHeight){
+      content.style.maxHeight = null;
+    } else {
+	  if (i == 0){
+        content.style.maxHeight = content.scrollHeight + 0 + "px";
+	  } else {
+	   content.style.maxHeight = content.scrollHeight + 130 + "px";
+	 }
+    } 
+  });
+}
+</script>  
+</html>
