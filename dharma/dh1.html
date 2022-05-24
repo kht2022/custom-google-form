@@ -42,6 +42,26 @@
 				return false;
 			});
 			
+/*			
+			// the selector will match all input controls of type :checkbox
+// and attach a click event handler 
+$("input:checkbox").on('click', function() {
+  // in the handler, 'this' refers to the box clicked on
+  var $box = $(this);
+  if ($box.is(":checked")) {
+    // the name of the box is retrieved using the .attr() method
+    // as it is assumed and expected to be immutable
+    var group = "input:checkbox[name='" + $box.attr("name") + "']";
+    // the checked state of the group/box on the other hand will change
+    // and the current value is retrieved using .prop() method
+    $(group).prop("checked", false);
+    $box.prop("checked", true);
+  } else {
+    $box.prop("checked", false);
+  }
+});
+*/			
+			
 			$('#submit').on('click', function() {
         
         // 姓名
@@ -153,17 +173,24 @@
           row.id = "row_" + rowCount;
           for (var i = 0; i < colCount; i++) {
             var newcell = row.insertCell(i);
-            newcell.outerHTML = table.rows[0].cells[i].outerHTML;
+			
+            //newcell.outerHTML = table.rows[0].cells[i].outerHTML.replaceAll("fooby[1][]", "fooby[" + (1+rowCount) + "][]");
+			newcell.outerHTML = table.rows[0].cells[i].outerHTML;
 			
           }
           var listitems = row.querySelectorAll("input, select");
 
           for (i = 0; i < listitems.length; i++) {
-            listitems[i].setAttribute("oninput", "calculate('" + row.id + "')");
+            //-listitems[i].setAttribute("oninput", "calculate('" + row.id + "')");
 			
-			listitems[1].setAttribute("onChange", "view('" + row.id + "')");
+			//-listitems[1].setAttribute("onChange", "view('" + row.id + "')");
 			
 			listitems[8].setAttribute("onClick", "deleteF('" + row.id + "')");
+			listitems[0].setAttribute("value", "A");
+			listitems[1].setAttribute("value", "B");
+			listitems[2].setAttribute("value", "C");
+			listitems[3].setAttribute("value", "D");
+			listitems[4].setAttribute("value", "E");
 			listitems[8].setAttribute("value", "x");
 			listitems[8].removeAttribute("hidden");
           }
@@ -608,13 +635,20 @@
           D.body.offsetHeight, D.documentElement.offsetHeight,
           D.body.clientHeight, D.documentElement.clientHeight
        );
-     }
+      }
+	  
+	  function onlyOne(checkbox) {
+        var checkboxes = document.getElementsByName('fooby[1][]')
+        checkboxes.forEach((item) => {
+          if (item !== checkbox) item.checked = false
+        })
+      }
 	</script>
 		 	
 </head> 
   
 <body> 
-    <h1>佛光山佛香講堂-孝道月梁皇法會(一)功德線上登記 v0.2</h1> 
+    <h1>佛光山佛香講堂-孝道月梁皇法會(一)功德線上登記 v0.3</h1> 
     <h3>孝道月梁皇法會(一)功德登記說明</h3> 
   
     <div id="gfg"> 
@@ -779,11 +813,11 @@
         <tr id="row_0">
           <p>
             <td width="10%">    			
-			   <input type="checkbox" name="skillset" value="chk1" /><label>1 冤親債主</label>
-			   <input type="checkbox" name="skillset" value="chk2" /><label>2 無人祭祀孤魂等眾</label>
-			   <input type="checkbox" name="skillset" value="chk3" /><label>3 十方法界一切眾生</label><br>
-			   <input type="checkbox" name="skillset" value="chk4" /><label>4 地基主</label><br>
-			   <input type="checkbox" name="skillset" value="chk5" /><label>5 (稱謂:</label>		
+			   <input type="checkbox" name="fooby[1][]" value="chk1" onclick="onlyOne(this)" /><label>1 冤親債主</label>
+			   <input type="checkbox" name="fooby[1][]" value="chk2" onclick="onlyOne(this)" /><label>2 無人祭祀孤魂等眾</label>
+			   <input type="checkbox" name="fooby[1][]" value="chk3" onclick="onlyOne(this)" /><label>3 十方法界一切眾生</label><br>
+			   <input type="checkbox" name="fooby[1][]" value="chk4" onclick="onlyOne(this)" /><label>4 地基主</label><br>
+			   <input type="checkbox" name="fooby[1][]" value="chk5" onclick="onlyOne(this)" /><label>5 (稱謂:</label>		
               <input
 			    size="20%"
                 type="text"
