@@ -1,0 +1,51 @@
+<!doctype html> 
+<html>   
+<head>
+</head>
+<style>
+body, html {
+  height: 100%;
+  overflow:hidden;
+}
+
+.bg {
+  /* The image used */
+  background-image: url("images/mtr.jpg");
+
+  /* Full height */
+  height: 100%;
+  width:100%;
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+img{
+    min-height:100%;
+    min-width:100%;
+    height:auto;
+    width:auto;
+    position:absolute;
+    top:-100%; bottom:-100%;
+    left:-100%; right:-100%;
+    margin:auto;
+}
+</style>
+<body>
+<script src="js/watermark.js"></script>
+<img src="images/mtr.jpg"/>
+<script type="text/javascript">
+window.onload = function(){
+  //添加水印
+  var current = new Date();
+  var yyyy = current.getFullYear();
+  var mm = current.getMonth() + 1 ? "0" + (current.getMonth() + 1) : current.getMonth() + 1;
+  var dd = current.getDate() < 10 ? "0" + current.getDate() : current.getDate();
+  var hh = current.getHours() < 10 ? "0" + current.getHours() : current.getHours();
+  var ss = current.getMinutes() < 10 ? "0" + current.getMinutes() : current.getMinutes();
+  
+    watermark.set("ABCDEE",yyyy + "-" + mm + "-" + dd + " " + hh + ":" + ss);
+}
+</script>
+</body>
+</html>
