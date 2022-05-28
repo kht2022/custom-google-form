@@ -23,7 +23,7 @@ function setWatermark(args) {
 	//cans.rotate(30 * Math.PI / 180);  //左上右下
     cans.font = '29px Arial';
     // ziti yanse
-    cans.fillStyle = 'rgba(250, 0, 250, 0.5)';
+    cans.fillStyle = 'rgba(250, 0, 250, 0.)';
     cans.textAlign = 'left';
     cans.textBaseline = 'bottom';
     for(let i = 0;i<args.length;i++){
