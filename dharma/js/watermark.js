@@ -5,38 +5,45 @@ function setWatermark(args) {
 	//声明一个怪异一点的变量，确保id的唯一性
     var id = '111.222.333.456';
     var xIndex = 15;//绘制文本的 x 坐标位置
-    var yIndex = 65;//绘制文本的 y 坐标位置
-    var xInterval = 25//有多个参数时的行间间隔
+    var yIndex = 200;//绘制文本的 y 坐标位置
+    var xInterval = 30//有多个参数时的行间间隔
     if (document.getElementById(id) !== null) {
         document.body.removeChild(document.getElementById(id));
     }
 	//利用canvas绘制水印信息
     var can = document.createElement('canvas');
-    can.width = 250;
-    can.height = 150;
+	
+	can.fillStyle = 'red';
+    can.strokeStyle = 'black';
+	
+    can.width = 400;
+    can.height = 300;
     var cans = can.getContext('2d');
-    cans.rotate(-20 * Math.PI / 180);
-    cans.font = '17px Vedana';
+    cans.rotate(-30 * Math.PI / 180);  //左下右上
+	//cans.rotate(30 * Math.PI / 180);  //左上右下
+    cans.font = '29px Arial';
     // ziti yanse
-    cans.fillStyle = 'rgba(200, 129, 179, 0.30)';
+    cans.fillStyle = 'rgba(250, 0, 250, 0.5)';
     cans.textAlign = 'left';
-    cans.textBaseline = 'Middle';
+    cans.textBaseline = 'bottom';
     for(let i = 0;i<args.length;i++){
     	cans.fillText(args[i], xIndex , yIndex); //绘制水印文案
-    	yIndex+=xInterval ;//设置每行间隔
-}
+    	yIndex+=xInterval ;//设置每行间隔		
+	}
+	//can.fill();
+    //can.stroke();
 //创建div用于显示
     var div = document.createElement('div');
     div.id = id;
     div.style.pointerEvents = 'none';
-    div.style.top = '70px';
-    div.style.left = '90px';
+    div.style.top = '10px';
+    div.style.left = '10px';
     div.style.position = 'fixed';
     div.style.zIndex = '100000';
     div.style.width = document.documentElement.clientWidth - 50 + 'px';
     div.style.height = document.documentElement.clientHeight - 50 + 'px';
     //div承载水印显示
-    div.style.background = 'url(' + can.toDataURL('image/png') + ') left top repeat';
+    div.style.background = 'url(' + can.toDataURL('image/png') + ') repeat';
     document.body.appendChild(div);
     return id;
 }
@@ -69,4 +76,3 @@ watermark.set = function(){
     }
 }
 window.watermark = watermark;
-
