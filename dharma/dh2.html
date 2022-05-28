@@ -1394,7 +1394,6 @@ $("input:checkbox").on('click', function() {
 	   <button type="button" id="submit" class="button-primary u-full-width">確認送出</button>
         </div>
     </div> 
-</body> 
 <!--<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
   <script>
     $(function() {
@@ -1548,4 +1547,12 @@ for (i = 0; i < coll.length; i++) {
   });
 }
 </script>  
+<script src="js/watermark.js"></script>
+<script type="text/javascript">
+window.onload = function(){
+  //添加水印
+    watermark.set("佛光山佛香講堂");
+}
+</script>
+</body>
 </html>
