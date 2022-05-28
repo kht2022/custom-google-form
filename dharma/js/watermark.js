@@ -4,8 +4,8 @@ function setWatermark(args) {
  console.log(...arguments)
 	//声明一个怪异一点的变量，确保id的唯一性
     var id = '111.222.333.456';
-    var xIndex = 15;//绘制文本的 x 坐标位置
-    var yIndex = 200;//绘制文本的 y 坐标位置
+    var xIndex = 10;//绘制文本的 x 坐标位置
+    var yIndex = 150;//绘制文本的 y 坐标位置
     var xInterval = 30//有多个参数时的行间间隔
     if (document.getElementById(id) !== null) {
         document.body.removeChild(document.getElementById(id));
@@ -19,11 +19,12 @@ function setWatermark(args) {
     can.width = 400;
     can.height = 300;
     var cans = can.getContext('2d');
-    cans.rotate(-30 * Math.PI / 180);  //左下右上
+    cans.rotate(-40 * Math.PI / 180);  //左下右上
 	//cans.rotate(30 * Math.PI / 180);  //左上右下
-    cans.font = '29px Arial';
+    cans.font = '23px Arial';
     // ziti yanse
-    cans.fillStyle = 'rgba(250, 0, 250, 0.)';
+    //cans.fillStyle = 'rgba(250, 0, 250, 0.5)';
+    cans.fillStyle = 'rgba(123, 129, 132, 0.5)';
     cans.textAlign = 'left';
     cans.textBaseline = 'bottom';
     for(let i = 0;i<args.length;i++){
