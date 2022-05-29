@@ -5,7 +5,7 @@ function setWatermark(args) {
 	//声明一个怪异一点的变量，确保id的唯一性
     var id = '111.222.333.456';
     var xIndex = 10;//绘制文本的 x 坐标位置
-    var yIndex = 150;//绘制文本的 y 坐标位置
+    var yIndex = 200;//绘制文本的 y 坐标位置
     var xInterval = 30//有多个参数时的行间间隔
     if (document.getElementById(id) !== null) {
         document.body.removeChild(document.getElementById(id));
