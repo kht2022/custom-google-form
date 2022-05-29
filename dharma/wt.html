@@ -1,0 +1,65 @@
+<style type="text/css">
+  #watermark { display: none; }
+
+  @media print {
+    #watermark {
+      display: block;
+	  content: 'CodeHasBug';
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 1;
+
+	color: #0d745e;
+	font-size: 100px;
+	font-weight: 500px;
+	display: grid;
+	justify-content: center;
+	align-content: center;
+	opacity: 0.2;
+	transform: rotate(-45deg) ;
+    }		
+  }
+</style>
+
+<body>
+<pre>
+iPhone 14 官方流出｜距離 iPhone 14 的發布至少尚有 3 個多月的時間，
+但網絡上早有大量有關這部新一代 iPhone 的規格、功能傳聞流出，而除了不
+同的分析師、傳媒人爆料以外，就在稍早前連 Apple 官方都加入洩密行列，
+在官方影片中確認了一個流傳已久的傳聞！
+
+
+Apple 泰國官方影片洩 iPhone 14「真身」？
+
+事源 Apple 泰國官方早前在其 Youtube 頻道就發布兩條宣傳 Apple Pay 的廣告影片
+，然而在以動畫型式展示 iPhone 手機的 FaceID 認證畫面時，顯示出的卻並非過去
+幾代的「M字額」設計，而是近幾個月來多番被傳聞的驚嘆號打孔前鏡頭。
+
+原文網址: iPhone 14新設計｜Apple官方片流出、提早確認「感嘆號」前鏡設計 | 
+香港01 https://www.hk01.com/sns/article/775096
+
+
+</pre>
+
+<div id="watermark">Watermark</div>
+<script src="js/watermark.js"></script>
+<img src="images/mtr.jpg" width="100%"/>
+
+<script type="text/javascript">
+window.onload = function(){
+  //添加水印
+  var current = new Date();
+  var yyyy = current.getFullYear();
+  var mm = current.getMonth() + 1 ? "0" + (current.getMonth() + 1) : current.getMonth() + 1;
+  var dd = current.getDate() < 10 ? "0" + current.getDate() : current.getDate();
+  var hh = current.getHours() < 10 ? "0" + current.getHours() : current.getHours();
+  var ss = current.getMinutes() < 10 ? "0" + current.getMinutes() : current.getMinutes();
+  
+    document.getElementById("watermark").innerHTML = yyyy + "-" + mm + "-" + dd + " " + hh + ":" + ss;
+	watermark.set("ABCDEE",yyyy + "-" + mm + "-" + dd + " " + hh + ":" + ss);
+}
+</script>
+</body>
