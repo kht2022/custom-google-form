@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>完全客製google表單，美化表單樣式 </title>
+
+  <!-- customized style -->
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      font-size: 16px;
+    }
+    html, body, .container, .row {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .container {
+      max-width: 100%;
+    }
+    button {
+      font-size: 16px;
+    }
+
+    .half {
+      position: fixed;
+      margin: 0;
+      width: 50% !important;
+      height: 100%;
+    }
+    .bg {
+      background: url('https://fakeimg.pl/1920x1024/?text=FGS-0703') center center;
+      background-size: cover;
+    }
+    .form {
+      left: 50%;
+      overflow: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    h1, form {
+      width: 100%;
+    }
+    h1 {
+      padding-top: 16px;
+      text-align: center;
+    }
+    form {
+      margin-right: auto;
+      margin-left: auto;
+      max-width: 400px;
+    }
+    .input-group {
+      margin-bottom: 30px;
+    }
+    .radio-group label {
+      display: inline-block;
+    }
+    textarea {
+      min-height: 100px;
+    }
+
+    @media screen and (max-width: 1024px) {
+      .half {
+        position: static;
+        width: 100% !important;
+        height: auto;
+      }
+      .bg {
+        height: 30vh;
+      }
+      form {
+        padding-right: 12px;
+        padding-left: 12px;
+      }
+    }
+    
+
+  </style>
+
+  <link rel="shortcut icon" href="https://letswritetw.github.io/letswritetw/dist/img/logo_512.png"/>
+
+
+<script type="text/javascript">
+function showHint(str)
+{
+var xmlhttp;
+
+        if (window.XMLHttpRequest)
+          {// code for IE7+, Firefox, Chrome, Opera, Safari
+          xmlhttp=new XMLHttpRequest();
+          }
+        else
+          {// code for IE6, IE5
+          xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+          }
+        xmlhttp.onreadystatechange=function()
+          {
+                  if (xmlhttp.readyState==4 && xmlhttp.status==200)      
+                  {
+                        var result=xmlhttp.responseText;
+                        var html = result;
+                      /*    
+                        var obj = JSON.parse(result);//解析json字串為json物件形式
+                                                
+                        var html = '<table border=1 width=100%>';//
+                        
+                        for (var i = 0; i < obj.length; i ++ ) {//
+                                html  += '<tr>';//
+                                for(j=0;j<obj[i].data.length;j++)
+                                {
+                                  html+= '<td>'+obj[i].data[j]+'</td>'; 
+                                }
+                                html  += '</tr>';            
+                        }
+                        html+="</table>";
+                      */  
+                        document.getElementById("ttl").innerHTML="總功德數目 : " + html
+                        if(html.length==0) //只有一筆代表查不到資料
+                                alert('查無資料');
+                  }
+
+          }
+    //var url="https://script.google.com/macros/s/AKfycbwgW-Luy9vwtDohR7qD91Uq_atyW3GPlthO4-lPPpGUoDjU7uLhmKtUCuPZWpj8twTp/exec";
+    var url="https://script.google.com/macros/s/AKfycbwRW4yyIWpzjzQwZMlH8GwJkMruLIbJo5OgpqThZP-t1kmUWB1aukFbWzYm7FMlwug/exec";
+        //xmlhttp.open("get",url+"?uid="+encodeURIComponent(str),true);
+        xmlhttp.open("get",url,true);
+        xmlhttp.send();
+}
+</script>
+</head>
+<body onload="showHint(11)">
+
+  <div class="container">
+    <main class="row">
+      <!-- bg -->
+      <section class="six columns half bg"></section>
+      
+      <!-- form -->
+      <section class="six columns half form">
+        <h1>線上功德登記-07-Mar-2022</h1>
+       <br>
+        
+        <form id="myform">
+          <!-- 姓名 -->
+          <div class="input-group">
+            <label for="demo_name">姓名</label>
+            <input class="u-full-width" type="text" placeholder="捐款人姓名" id="demo_name">
+          </div>
+			
+			<br>
+				<input type="checkbox" name="targetaddress" value="懺主 （1名 - HK$1000)">懺主 （1名 - HK$1000)</input>
+			<br>
+				<input type="checkbox" name="targetaddress" value="消災大牌 （1名 - HK$500)">消災大牌 （1名 - HK$500)</input>
+			<br>
+				<input type="checkbox" name="targetaddress" value="消災小牌 （1名 - HK$100)">消災小牌 （1名 - HK$100)</input>
+			<br>
+            <br>
+     <span id="ttl"></span>
+            <br>
+            <br>
+         總數 :
+         <span id="total" style = "font-size: 15px; font-weight: bold;"> 
+            0
+         </span>
+
+          <button type="button" id="submit" class="button-primary u-full-width">確認送出</button>
+
+        </form>
+      </section>
+    </main>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script>
+    $(function() {	  
+	
+      $('#submit').on('click', function() {
+        
+        // 姓名
+        var name = $('#demo_name').val() || '未填寫';
+		//alert(name);
+        // 
+        var cb = function() {
+          var v;
+          $('[name="targetaddress"]').each(function() {
+            if($(this).prop('checked') === true) v = $(this).val();
+          });
+          return v;
+        };
+		//alert(cb());
+        // 類別
+        var totall = $('#total').val() || '未填寫';
+     		//alert(totall);
+        // post
+		//https://docs.google.com/forms/    d/e/1FAIpQLSfaUS5YgmO6UODZP9kgZ89-tzJRsizg_0bvMhjQ11Cs8JFfYA/viewform',
+        var data = {
+
+          'entry.89907163': name,
+          'entry.1733046673': cb(),
+          'entry.190242280': totall,
+             
+        };
+        $.ajax({
+          type: 'POST',		
+	  url: 'https://docs.google.com/forms/d/e/1FAIpQLSdIFtNarQnlQ1L3kYBEEgpDcTMFx4FJY1hD_vPzpYbMddliAA/formResponse',
+          data: data,
+          contentType: 'application/json',
+          dataType: 'jsonp',
+          complete: function() {
+            alert('資料已送出！');
+            $('#total').text('0');
+            $("#myform")[0].reset();
+          }
+        });
+        
+      });
+    });
+  </script>
+  <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+  <script>
+      var ttl=0;
+      $(document).ready(function() {
+          $('input[type="checkbox"]').click(function() {
+              if($(this).is(":checked")) {
+		 let text =  $(this).val();
+		 let start = text.indexOf('HK$') + 3;
+		 let end = text.indexOf(')');
+                 let num = text.substring(start, end);	      
+		 ttl = ttl + parseInt(num);
+		 $('#total').text(ttl);
+              }
+              else if($(this).is(":not(:checked)")) {		      
+		 let text =  $(this).val();
+		 let start = text.indexOf('HK$') + 3;
+		 let end = text.indexOf(')');
+                 let num = text.substring(start, end);	      
+		 ttl = ttl - parseInt(num);
+		 $('#total').text(ttl);
+              }
+            });
+        });
+    </script>
+  
+</body>
+</html>
