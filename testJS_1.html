@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://code.jquery.com/jquery-1.3.2.js"></script>
+</head>
+<body>
+
+
+<center>
+
+
+<br />
+
+
+ 
+</script>
+
+
+<h1>(0:30 , 1:30, 2:30)</h1>
+<div style="padding:16px;">
+	預計完成時間 : <input type="textbox" value="1:30" onkeypress="return checkNumber(event)"></input>
+</div>
+
+<h2>配速 : <label id="msg1"></label></h2>
+<h2>快*0.97: <label id="msg2"></label></h2>
+<h2>慢*1.15: <label id="msg3"></label></h2>
+
+	
+<button id="Get">Calcuate</button> 
+<button id="Reset">Reset It</button>
+
+
+
+</body>
+
+
+
+
+
+<script language="javascript" type="text/javascript">
+function formattingTime() {
+    var count = 0; //document.getElementById('kmh').value;
+    var time = '';
+    var second = count % 60;
+    var minute = parseInt(parseInt(count) / 60) % 60;
+    time = second + "秒";
+     if (minute >= 1 ) {
+       time = minute + "分" + second + "秒";
+     }
+     var hour = parseInt( parseInt(parseInt(count/60)/60)%24);
+     if (hour >= 1) {
+       time = hour + "小時" + minute + "分" + second + "秒";
+     } else {
+       time = minute + "分" + second + "秒";
+     }
+     var day = parseInt( parseInt(parseInt(count/60)/60)/24);
+     if (day >= 1) {
+       time = day + "天" + hour + "小時" + minute + "分" + second + "秒";
+     }
+   return time;
+}
+
+function checkNumber(event) {
+
+var aCode = event.which ? event.which : event.keyCode;
+//alert(aCode);
+
+if (aCode > 31 && (aCode < 48 || aCode > 58)) return false;
+
+return true;
+
+}
+
+function convertH2M(timeInHour){
+  var timeParts = timeInHour.split(":");
+  return Number(timeParts[0]) * 60 + Number(timeParts[1]);
+}
+
+
+
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        var kmh = $('kmh');
+        var kk = $('#kk');
+        kk.click(function() {
+            alert(kmh.val());
+            document.getElementById("demo").innerHTML = kmh.val();
+        });
+    });
+</script>
+
+
+
+<script type="text/javascript">
+    $("button:#Get").click(function () {
+		
+         var count = convertH2M($('input:textbox').val());
+         var half = 21.0975;
+         var full = 42.195;
+
+         var target_min = 0;
+         var target_sec = 0;
+         var fast_min = 0;
+         var fast_sec = 0;
+         var slow_min = 0;
+         var slow_sec = 0;
+         if (count < 120){
+           target_min = parseInt( count / half);
+           target_sec = (((count / half) - target_min) * 60) / 100 ;
+           target_sec = parseFloat(target_sec).toFixed(2);
+	   target_sec = target_sec.toString();
+           target_sec = target_sec.replace("0.","");
+
+           fast_min = parseInt( (count * 0.97) / half);
+           fast_sec = ((((count * 0.97) / half) - fast_min) * 60) / 100 ;
+           fast_sec = parseFloat(fast_sec).toFixed(2);
+	   fast_sec = fast_sec.toString();
+           fast_sec = fast_sec.replace("0.","");
+
+           slow_min = parseInt( (count * 1.15) / half);
+           slow_sec = ((((count * 1.15)/ half) - slow_min) * 60) / 100 ;
+           slow_sec = parseFloat(slow_sec).toFixed(2);
+	   slow_sec = slow_sec.toString();
+           slow_sec = slow_sec.replace("0.","");
+
+         } else {
+           target_min = parseInt( count / full);
+           target_sec = (((count / full) - target_min) * 60) / 100 ;
+           target_sec = parseFloat(target_sec).toFixed(2);
+	   target_sec = target_sec.toString();
+           target_sec = target_sec.replace("0.","");
+
+           fast_min = parseInt( (count * 0.97) / full);
+           fast_sec = ((((count * 0.97) / full) - fast_min) * 60) / 100 ;
+           fast_sec = parseFloat(fast_sec).toFixed(2);
+	   fast_sec = fast_sec.toString();
+           fast_sec = fast_sec.replace("0.","");
+
+           slow_min = parseInt( (count * 1.15) / full);
+           slow_sec = ((((count * 1.15)/ full) - slow_min) * 60) / 100 ;
+           slow_sec = parseFloat(slow_sec).toFixed(2);
+	   slow_sec = slow_sec.toString();
+           slow_sec = slow_sec.replace("0.","");
+         }
+
+
+         var time = '';
+  
+         if (target_min >= 1 ) {
+            time = target_min + "分" + target_sec + "秒";
+            $('#msg1').html(time);
+            time = fast_min + "分" + fast_sec + "秒";
+	    $('#msg2').html(time);
+            time = slow_min + "分" + slow_sec + "秒";
+            $('#msg3').html(time);
+            return;
+         }
+
+
+
+         if (count > 120){
+           var second = full_hour % 60;
+         } else {
+           var second = half_hour % 60;
+         }
+         
+         var minute = parseInt(parseInt(count) / 60) % 60;
+         time = second + "秒";
+          if (minute >= 1 ) {
+            time = minute + "分" + second + "秒";
+          }
+          var hour = parseInt( parseInt(parseInt(count/60)/60)%24);
+          if (hour >= 1) {
+            time = hour + "小時" + minute + "分" + second + "秒";
+          } else {
+            time = 0 + "小時" + minute + "分" + second + "秒";
+          }
+          var day = parseInt( parseInt(parseInt(count/60)/60)/24);
+          if (day >= 1) {
+            time = day + "天" + hour + "小時" + minute + "分" + second + "秒";
+          }
+
+
+//	$('#msg').html($('input:textbox').val());
+	$('#msg').html(time);
+		
+    });
+	
+    $("button:#Reset").click(function () {
+		
+	$('#msg').html("");
+	$('input:textbox').val("");
+		
+    });
+	
+    $("button:#Set").click(function () {
+		
+	$('input:textbox').val("ABC");
+	$('#msg').html($('input:textbox').val());
+		
+    });
+	
+</script>
+
+</html>
+
+
