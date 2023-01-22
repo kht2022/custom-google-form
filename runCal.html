@@ -24,7 +24,8 @@
 
 <h2>配速 : <label id="msg1"></label></h2>
 <h2>快*0.97: <label id="msg2"></label></h2>
-<h2>慢*1.15: <label id="msg3"></label></h2>
+<h2>慢*1.1: <label id="msg3"></label></h2>
+<h2>慢*1.15: <label id="msg4"></label></h2>	
 
 	
 <button id="Get">Calcuate</button> 
@@ -107,6 +108,8 @@ function convertH2M(timeInHour){
          var fast_sec = 0;
          var slow_min = 0;
          var slow_sec = 0;
+         var slow_min2 = 0;
+         var slow_sec2 = 0;	    
          if (count < 120){
            target_min = parseInt( count / half);
            target_sec = (((count / half) - target_min) * 60) / 100 ;
@@ -125,6 +128,12 @@ function convertH2M(timeInHour){
            slow_sec = parseFloat(slow_sec).toFixed(2);
 	   slow_sec = slow_sec.toString();
            slow_sec = slow_sec.replace("0.","");
+		 
+           slow_min2 = parseInt( (count * 1.15) / half);
+           slow_sec2 = ((((count * 1.15)/ half) - slow_min2) * 60) / 100 ;
+           slow_sec2 = parseFloat(slow_sec2).toFixed(2);
+	   slow_sec2 = slow_sec2.toString();
+           slow_sec2 = slow_sec2.replace("0.","");		 
 
          } else {
            target_min = parseInt( count / full);
@@ -144,6 +153,12 @@ function convertH2M(timeInHour){
            slow_sec = parseFloat(slow_sec).toFixed(2);
 	   slow_sec = slow_sec.toString();
            slow_sec = slow_sec.replace("0.","");
+
+           slow_min2 = parseInt( (count * 1.15) / full);
+           slow_sec2 = ((((count * 1.15)/ full) - slow_min2) * 60) / 100 ;
+           slow_sec2 = parseFloat(slow_sec2).toFixed(2);
+	   slow_sec2 = slow_sec2.toString();
+           slow_sec2 = slow_sec2.replace("0.","");		 
          }
 
 
@@ -152,10 +167,15 @@ function convertH2M(timeInHour){
          if (target_min >= 1 ) {
             time = target_min + "分" + target_sec + "秒";
             $('#msg1').html(time);
+	    time = "";	 
             time = fast_min + "分" + fast_sec + "秒";
 	    $('#msg2').html(time);
+            time = "";
             time = slow_min + "分" + slow_sec + "秒";
             $('#msg3').html(time);
+	    time = "";	 
+            time = slow_min2 + "分" + slow_sec2 + "秒";
+            $('#msg4').html(time);		 
             return;
          }
 
