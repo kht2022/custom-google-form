@@ -135,8 +135,8 @@ function convertH2M(timeInHour){
            fast_sec = fast_sec.replace("0.","");
 	   fast_min_400 = (((parseInt(fast_min) * 60) + parseInt(fast_sec)) / 1000) * 400;
 
-           slow_min = parseInt( (count * 1.15) / half);
-           slow_sec = ((((count * 1.15)/ half) - slow_min) * 60) / 100 ;
+           slow_min = parseInt( (count * 1.1) / half);
+           slow_sec = ((((count * 1.1)/ half) - slow_min) * 60) / 100 ;
            slow_sec = parseFloat(slow_sec).toFixed(2);
 	   slow_sec = slow_sec.toString();
            slow_sec = slow_sec.replace("0.","");
@@ -164,8 +164,8 @@ function convertH2M(timeInHour){
            fast_sec = fast_sec.replace("0.","");
 	   fast_min_400 = (((parseInt(fast_min) * 60) + parseInt(fast_sec)) / 1000) * 400;	 
 
-           slow_min = parseInt( (count * 1.15) / full);
-           slow_sec = ((((count * 1.15)/ full) - slow_min) * 60) / 100 ;
+           slow_min = parseInt( (count * 1.1) / full);
+           slow_sec = ((((count * 1.1)/ full) - slow_min) * 60) / 100 ;
            slow_sec = parseFloat(slow_sec).toFixed(2);
 	   slow_sec = slow_sec.toString();
            slow_sec = slow_sec.replace("0.","");
