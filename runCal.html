@@ -147,6 +147,7 @@ function convertH2M(timeInHour){
            target_sec = parseFloat(target_sec).toFixed(2);
 	   target_sec = target_sec.toString();
            target_sec = target_sec.replace("0.","");
+           target_min_400_temp = (((parseInt(target_min) * 60) + parseInt(target_sec)) / 1000) * 400;
 
            fast_min = parseInt( (count * 0.97) / full);
            fast_sec = ((((count * 0.97) / full) - fast_min) * 60) / 100 ;
