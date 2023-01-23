@@ -183,29 +183,29 @@ function convertH2M(timeInHour){
          var time = '';
   
          if (target_min >= 1 ) {
-            time = target_min + "分" + target_sec + "秒";
-            $('#msg1').html(time);
+            //time = target_min + "分" + target_sec + "秒";
+	    time = (((parseInt(target_min) * 60) + parseInt(target_sec)));
+            $('#msg1').html(new Date(time * 1000).toISOString().substr(14, 5));	             
 	    time = "";	 
-            time = fast_min + "分" + fast_sec + "秒";
-	    $('#msg2').html(time);
+            //time = fast_min + "分" + fast_sec + "秒";
+            time = (((parseInt(fast_min) * 60) + parseInt(fast_sec)));
+	    $('#msg2').html(new Date(time * 1000).toISOString().substr(14, 5));	             
             time = "";
-            time = slow_min + "分" + slow_sec + "秒";
-            $('#msg3').html(time);
+            //time = slow_min + "分" + slow_sec + "秒";
+	    time = (((parseInt(slow_min) * 60) + parseInt(slow_sec)));	 
+            $('#msg3').html(new Date(time * 1000).toISOString().substr(14, 5));	             
 	    time = "";	 
-            time = slow_min2 + "分" + slow_sec2 + "秒";
-            $('#msg4').html(time);	
-	    time = "";	 	 
-            time = target_min_400 + "秒";
-            $('#msg5').html(time);		 
-            time = "";	 	 
-            time = fast_min_400 + "秒";
-            $('#msg6').html(time);		 		 
-            time = "";	 	 
-            time = slow_min_400 + "秒";
-            $('#msg7').html(time);		 		 
-            time = "";	 	 
-            time = slow_min2_400 + "秒";
-            $('#msg8').html(time);		 		 
+            //time = slow_min2 + "分" + slow_sec2 + "秒";
+	    time = (((parseInt(slow_min2) * 60) + parseInt(slow_sec2)));	 	 
+            $('#msg4').html(new Date(time * 1000).toISOString().substr(14, 5));	             
+
+            $('#msg5').html(new Date(target_min_400 * 1000).toISOString().substr(14, 5);
+
+            $('#msg6').html(new Date(fast_min_400 * 1000).toISOString().substr(14, 5);
+
+            $('#msg7').html(new Date(slow_min_400 * 1000).toISOString().substr(14, 5);
+
+            $('#msg8').html(new Date(slow_min2_400 * 1000).toISOString().substr(14, 5);		 		 
             return;
          }
 
