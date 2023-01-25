@@ -43,6 +43,7 @@ var xmlhttp;
                         html+="</table>";
                       */  
                         document.getElementById("playerList").innerHTML="跑友名稱 : " + html
+			document.getElementById("playerSelect").innerHTML="選擇跑友名稱 : " + dynamicDropdownList(html);
                         if(html.length==0) //只有一筆代表查不到資料
                                 alert('查無資料');
                   }
@@ -73,7 +74,8 @@ var xmlhttp;
 <div style="padding:16px;">
 	預計完成時間 : <input type="textbox" value="2:57" onkeypress="return checkNumber(event)"></input>
 </div>
-<span id="playerList"></span>
+<span id="playerList"></span><br>
+<span id="playerSelect"></span>	
 <div id="div1">
 <h2>配速 : <label id="msg1"></label></h2>
 <h2>快*0.97: <label id="msg2"></label></h2>
@@ -131,6 +133,21 @@ return true;
 
 }
 
+	
+//This method calls on button click
+function dynamicDropdownList(source){
+    var myArray = source.split(",");
+    var dropdownHTML = '<select>';
+    for(var i=0;i<myArray.length;i++){
+        var value = myArray[i];        
+        dropdownHTML+='<option value="'+value+'">'+value+'</option>';
+    }
+    dropdownHTML+='</select>';        
+    //Load the dynamically created dropdown in container
+    var container=document.getElementById("dropdown-container");
+    return dropdownHTML;
+}	
+	
 function convertH2M(timeInHour){
   var timeParts = timeInHour.split(":");
   return Number(timeParts[0]) * 60 + Number(timeParts[1]);
