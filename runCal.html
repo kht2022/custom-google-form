@@ -80,6 +80,7 @@ var xmlhttp;
 <span id="playerList"></span><br>
 <span id="playerSelect"></span>	
 <div id="div1">
+<h2>跑友 : <label id="msg0"></label></h2>	
 <h2>配速 : <label id="msg1"></label></h2>
 <h2>快*0.97: <label id="msg2"></label></h2>
 <h2>慢*1.1: <label id="msg3"></label></h2>
@@ -141,11 +142,15 @@ return true;
 function dynamicDropdownList(source){
     var myArray = source.split(",");
     var dropdownHTML = '<select id="combo" onchange="getCombo(this)">';
+    var firstRunner="";
     var firstEstTime="";
     var firstOption="";
     for(var i=0;i<myArray.length;i++){
         var value = myArray[i];   
         var minValue = value.split("#");     
+        if (firstRunner.length == 0){
+           firstRunner = minValue[0];
+        }
         if (firstEstTime.length == 0){
            firstEstTime = minValue[2];
         }
@@ -154,7 +159,7 @@ function dynamicDropdownList(source){
         }
         if (typeof(minValue[2]) != 'undefined') {
            document.getElementById("estTime").value=minValue[2];
-           dropdownHTML+='<option value="'+minValue[1]+'#'+minValue[2]+'">'+minValue[0]+'  Time:'+minValue[2]+'</option>';
+           dropdownHTML+='<option value="'+minValue[0]+'#'+minValue[1]+'#'+minValue[2]+'">'+minValue[0]+'  Time:'+minValue[2]+'</option>';
 	} else {
            document.getElementById("estTime").value="";
            dropdownHTML+='<option value="'+minValue[1]+'#'+minValue[2]+'">'+minValue[0]+'  Time:</option>';
@@ -172,6 +177,8 @@ function dynamicDropdownList(source){
     dropdownHTML+='</select>';        
     //Load the dynamically created dropdown in container
     //var container=document.getElementById("dropdown-container");
+
+    $('#msg0').html(firstRunner);	             
     if (firstOption === 'FULL') {
        document.getElementById("radioFull").checked = true;
     }
