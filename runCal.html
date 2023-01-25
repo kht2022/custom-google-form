@@ -194,14 +194,15 @@ function dynamicDropdownList(source){
 
 function getCombo(selectObject) {
   var value = selectObject.value.split("#");  
-  document.getElementById("estTime").value=value[1];
-  if (value[0] === 'FULL') {
+  document.getElementById("estTime").value=value[2];
+  $('#msg0').html(value[0]);	             
+  if (value[1] === 'FULL') {
      document.getElementById("radioFull").checked = true;
   }
-  if (value[0] === 'HALF') {
+  if (value[1] === 'HALF') {
      document.getElementById("radioHalf").checked = true;
   }
-  if (value[0] === '10K') {
+  if (value[1] === '10K') {
      document.getElementById("radio10K").checked = true;
   }        
   console.log(value);
