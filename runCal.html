@@ -141,10 +141,17 @@ return true;
 function dynamicDropdownList(source){
     var myArray = source.split(",");
     var dropdownHTML = '<select id="combo" onchange="getCombo(this)">';
+    var firstEstTime="";
+    var firstOption="";
     for(var i=0;i<myArray.length;i++){
         var value = myArray[i];   
         var minValue = value.split("#");     
-
+        if (firstEstTime.length == 0){
+           firstEstTime = minValue[2];
+        }
+        if (firstOption.length == 0){
+           firstOption = minValue[1];
+        }
         if (typeof(minValue[2]) != 'undefined') {
            document.getElementById("estTime").value=minValue[2];
            dropdownHTML+='<option value="'+minValue[1]+'#'+minValue[2]+'">'+minValue[0]+'  Time:'+minValue[2]+'</option>';
@@ -165,8 +172,16 @@ function dynamicDropdownList(source){
     dropdownHTML+='</select>';        
     //Load the dynamically created dropdown in container
     //var container=document.getElementById("dropdown-container");
-    document.getElementById("radioFull").checked = true;
-    document.getElementById("estTime").value="2:57";
+    if (firstOption === 'FULL') {
+       document.getElementById("radioFull").checked = true;
+    }
+    if (firstOption === 'HALF') {
+       document.getElementById("radioHalf").checked = true;
+    }
+    if (firstOption === '10K') {
+       document.getElementById("radio10K").checked = true;
+    } 
+    document.getElementById("estTime").value=firstEstTime;
     return dropdownHTML;
 }	
 
