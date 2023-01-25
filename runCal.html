@@ -278,7 +278,7 @@ function handleClick(myRadio) {
          var slow_min2 = 0;
          var slow_sec2 = 0;	    
 	 var slow_min2_400 = 0;   
-         if (runOpt === 'HALF'){
+         if (runOpt === 'half'){
            target_min = parseInt( count / half);
            target_sec = (((count / half) - target_min) * 60) / 100 ;
            target_sec = parseFloat(target_sec).toFixed(2);
@@ -307,7 +307,7 @@ function handleClick(myRadio) {
            slow_sec2 = slow_sec2.replace("0.","");		 
            slow_min2_400 = (((parseInt(slow_min2) * 60) + parseInt(slow_sec2)) / 1000) * 400;		 
 
-         } else if (runOpt === 'FULL'){
+         } else if (runOpt === 'full'){
            target_min = parseInt( count / full);
            target_sec = (((count / full) - target_min) * 60) / 100 ;
            target_sec = parseFloat(target_sec).toFixed(2);
