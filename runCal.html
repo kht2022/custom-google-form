@@ -72,7 +72,10 @@ var xmlhttp;
 
 <h1>(0:30 , 1:30, 2:30)</h1>
 <div style="padding:16px;">
-	預計完成時間 : <input type="textbox" value="2:57" onkeypress="return checkNumber(event)"></input>
+預計完成時間 : <input type="textbox" value="2:57" onkeypress="return checkNumber(event)"></input><br>
+<input type="radio" value="FULL" name="group">全馬
+<input type="radio" value="HALF" name="group">半馬
+<input type="radio" value="10K" name="group">10K
 </div>
 <span id="playerList"></span><br>
 <span id="playerSelect"></span>	
@@ -188,7 +191,7 @@ function CopyToClipboard(containerid) {
 
 <script type="text/javascript">
     $("button:#Get").click(function () {
-		
+	 var runOpt = document.querySelector('input[name="group"]:checked').value;	
          var count = convertH2M($('input:textbox').val());
          var half = 21.0975;
          var full = 42.195;
@@ -206,7 +209,7 @@ function CopyToClipboard(containerid) {
          var slow_min2 = 0;
          var slow_sec2 = 0;	    
 	 var slow_min2_400 = 0;   
-         if (count < 120){
+         if (runOpt === 'HALF'){
            target_min = parseInt( count / half);
            target_sec = (((count / half) - target_min) * 60) / 100 ;
            target_sec = parseFloat(target_sec).toFixed(2);
@@ -235,7 +238,35 @@ function CopyToClipboard(containerid) {
            slow_sec2 = slow_sec2.replace("0.","");		 
            slow_min2_400 = (((parseInt(slow_min2) * 60) + parseInt(slow_sec2)) / 1000) * 400;		 
 
-         } else {
+         } else if (runOpt === 'FULL'){
+           target_min = parseInt( count / full);
+           target_sec = (((count / full) - target_min) * 60) / 100 ;
+           target_sec = parseFloat(target_sec).toFixed(2);
+	   target_sec = target_sec.toString();
+           target_sec = target_sec.replace("0.","");
+           target_min_400 = (((parseInt(target_min) * 60) + parseInt(target_sec)) / 1000) * 400;
+
+           fast_min = parseInt( (count * 0.97) / full);
+           fast_sec = ((((count * 0.97) / full) - fast_min) * 60) / 100 ;
+           fast_sec = parseFloat(fast_sec).toFixed(2);
+	   fast_sec = fast_sec.toString();
+           fast_sec = fast_sec.replace("0.","");
+	   fast_min_400 = (((parseInt(fast_min) * 60) + parseInt(fast_sec)) / 1000) * 400;	 
+
+           slow_min = parseInt( (count * 1.1) / full);
+           slow_sec = ((((count * 1.1)/ full) - slow_min) * 60) / 100 ;
+           slow_sec = parseFloat(slow_sec).toFixed(2);
+	   slow_sec = slow_sec.toString();
+           slow_sec = slow_sec.replace("0.","");
+           slow_min_400 = (((parseInt(slow_min) * 60) + parseInt(slow_sec)) / 1000) * 400;		 
+
+           slow_min2 = parseInt( (count * 1.15) / full);
+           slow_sec2 = ((((count * 1.15)/ full) - slow_min2) * 60) / 100 ;
+           slow_sec2 = parseFloat(slow_sec2).toFixed(2);
+	   slow_sec2 = slow_sec2.toString();
+           slow_sec2 = slow_sec2.replace("0.","");
+	   slow_min2_400 = (((parseInt(slow_min2) * 60) + parseInt(slow_sec2)) / 1000) * 400;		 	 
+         }  else if (runOpt === '10K'){
            target_min = parseInt( count / full);
            target_sec = (((count / full) - target_min) * 60) / 100 ;
            target_sec = parseFloat(target_sec).toFixed(2);
