@@ -176,9 +176,9 @@ function CopyToClipboard(containerid) {
 function handleClick(myRadio) {
     alert('New value: ' + myRadio.value);
     var runOpt = document.querySelector('input[name="group"]:checked').value;
-    if (runOpt === 'half'){
+    if (runOpt === 'HALF'){
        document.getElementById("estTime").value="1:30";
-    } else if (runOpt === 'full'){
+    } else if (runOpt === 'FULL'){
        document.getElementById("estTime").value="2:57";
     } else if (runOpt === '10K'){
        document.getElementById("estTime").value="0:40";
