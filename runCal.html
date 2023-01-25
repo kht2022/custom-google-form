@@ -73,9 +73,9 @@ var xmlhttp;
 <h1>參考(0:30 , 1:30, 2:30)</h1>
 <div style="padding:16px;">
 預計完成時間 : <input type="textbox" value="2:57" onkeypress="return checkNumber(event)" id="estTime"></input><br>
-<input type="radio" value="FULL" name="group">全馬
-<input type="radio" value="HALF" name="group">半馬
-<input type="radio" value="10K" name="group">10K
+<input type="radio" value="FULL" name="group" onclick="handleClick(this);">全馬
+<input type="radio" value="HALF" name="group" onclick="handleClick(this);">半馬
+<input type="radio" value="10K" name="group" onclick="handleClick(this);">10K
 </div>
 <span id="playerList"></span><br>
 <span id="playerSelect"></span>	
@@ -174,7 +174,7 @@ function CopyToClipboard(containerid) {
 }
 
 function handleClick(myRadio) {
-    alert('New value: ' + myRadio.value);
+    //alert('New value: ' + myRadio.value);
     var runOpt = document.querySelector('input[name="group"]:checked').value;
     if (runOpt === 'HALF'){
        document.getElementById("estTime").value="1:30";
