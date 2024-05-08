@@ -70,12 +70,17 @@ var xmlhttp;
 
 
 
-<h1>參考(0:30 , 1:30, 2:30)</h1>
+<h1>參考(0:39 , 1:29, 2:59)</h1>
 <div style="padding:16px;">
-預計完成時間 : <input type="textbox" value="2:57" onkeypress="return checkNumber(event)" id="estTime"></input><br>
+預計完成時間 : 
+	<input type="textbox" size="3" value="2" onkeypress="return checkNumber(event)" id="estTimeHH"></input>:
+	<input type="textbox" size="3" value="59" onkeypress="return checkNumber(event)" id="estTimeMM"></input>	
+	<br>
 <input type="radio" id="radioFull" value="full" name="group" checked onclick="handleClick(this);">全馬
 <input type="radio" id="radioHalf" value="half" name="group" onclick="handleClick(this);">半馬
 <input type="radio" id="radio10K" value="10K" name="group" onclick="handleClick(this);">10K
+<input type="radio" id="radio10K" value="oth" name="group" onclick="handleClick(this);">Other
+<input type="textbox" size="3" value="5000" onkeypress="return checkNumber(event)" id="estTimeKm"></input>m
 </div>
 <span id="playerList"></span><br>
 <span id="playerSelect"></span>	
@@ -89,6 +94,9 @@ var xmlhttp;
 <h2>400M快*0.97: <label id="msg6"></label></h2>	
 <h2>400M慢*1.1: <label id="msg7"></label></h2>	
 <h2>400M慢*1.15: <label id="msg8"></label></h2>		
+<h2>200M: <label id="msg9"></label></h2>	
+<h2>800M: <label id="msg10"></label></h2>	
+<h2>1000M: <label id="msg11"></label></h2>	
 </div>
 	
 <button id="Get">Calcuate</button> 
@@ -208,9 +216,10 @@ function getCombo(selectObject) {
   console.log(value);
 }
 	
-function convertH2M(timeInHour){
-  var timeParts = timeInHour.split(":");
-  return Number(timeParts[0]) * 60 + Number(timeParts[1]);
+function convertH2M(timeInHour,timeInMin){
+  // var timeParts = timeInHour.split(":");
+  // return Number(timeParts[0]) * 60 + Number(timeParts[1]);
+  return Number(timeInHour) * 60 + Number(timeInMin);
 }
 
 	
@@ -233,12 +242,19 @@ function CopyToClipboard(containerid) {
 function handleClick(myRadio) {
     //alert('New value: ' + myRadio.value);
     var runOpt = document.querySelector('input[name="group"]:checked').value;
+	runOpt = runOpt.toUpperCase();
     if (runOpt === 'HALF'){
-       document.getElementById("estTime").value="1:30";
+       document.getElementById("estTimeHH").value="1";
+	   document.getElementById("estTimeMM").value="29";
     } else if (runOpt === 'FULL'){
-       document.getElementById("estTime").value="2:57";
+       document.getElementById("estTimeHH").value="2";
+	   document.getElementById("estTimeMM").value="59";
     } else if (runOpt === '10K'){
-       document.getElementById("estTime").value="0:40";
+       document.getElementById("estTimeHH").value="0";
+	   document.getElementById("estTimeMM").value="39";
+    } else if (runOpt === 'OTH'){
+       document.getElementById("estTimeHH").value="0";
+	   document.getElementById("estTimeMM").value="19";
     }   
 }
 
@@ -261,9 +277,13 @@ function handleClick(myRadio) {
 <script type="text/javascript">
     $("button:#Get").click(function () {
 	 var runOpt = document.querySelector('input[name="group"]:checked').value;	
-         var count = convertH2M($('input:textbox').val());
+         // var count = convertH2M($('input:textbox').val());
+		 var count = convertH2M(document.getElementById("estTimeHH").value,document.getElementById("estTimeMM").value);
+		 
          var half = 21.0975;
          var full = 42.195;
+		 var k10 = 10;
+		 var oth = document.getElementById("estTimeKm").value / 1000;
 
          var target_min = 0;
          var target_sec = 0;
@@ -336,29 +356,57 @@ function handleClick(myRadio) {
            slow_sec2 = slow_sec2.replace("0.","");
 	   slow_min2_400 = (((parseInt(slow_min2) * 60) + parseInt(slow_sec2)) / 1000) * 400;		 	 
          }  else if (runOpt === '10K'){
-           target_min = parseInt( count / full);
-           target_sec = (((count / full) - target_min) * 60) / 100 ;
+           target_min = parseInt( count / k10);
+           target_sec = (((count / k10) - target_min) * 60) / 100 ;
            target_sec = parseFloat(target_sec).toFixed(2);
 	   target_sec = target_sec.toString();
            target_sec = target_sec.replace("0.","");
            target_min_400 = (((parseInt(target_min) * 60) + parseInt(target_sec)) / 1000) * 400;
 
-           fast_min = parseInt( (count * 0.97) / full);
-           fast_sec = ((((count * 0.97) / full) - fast_min) * 60) / 100 ;
+           fast_min = parseInt( (count * 0.97) / k10);
+           fast_sec = ((((count * 0.97) / k10) - fast_min) * 60) / 100 ;
            fast_sec = parseFloat(fast_sec).toFixed(2);
 	   fast_sec = fast_sec.toString();
            fast_sec = fast_sec.replace("0.","");
 	   fast_min_400 = (((parseInt(fast_min) * 60) + parseInt(fast_sec)) / 1000) * 400;	 
 
-           slow_min = parseInt( (count * 1.1) / full);
-           slow_sec = ((((count * 1.1)/ full) - slow_min) * 60) / 100 ;
+           slow_min = parseInt( (count * 1.1) / k10);
+           slow_sec = ((((count * 1.1)/ k10) - slow_min) * 60) / 100 ;
            slow_sec = parseFloat(slow_sec).toFixed(2);
 	   slow_sec = slow_sec.toString();
            slow_sec = slow_sec.replace("0.","");
            slow_min_400 = (((parseInt(slow_min) * 60) + parseInt(slow_sec)) / 1000) * 400;		 
 
-           slow_min2 = parseInt( (count * 1.15) / full);
-           slow_sec2 = ((((count * 1.15)/ full) - slow_min2) * 60) / 100 ;
+           slow_min2 = parseInt( (count * 1.15) / k10);
+           slow_sec2 = ((((count * 1.15)/ k10) - slow_min2) * 60) / 100 ;
+           slow_sec2 = parseFloat(slow_sec2).toFixed(2);
+	   slow_sec2 = slow_sec2.toString();
+           slow_sec2 = slow_sec2.replace("0.","");
+	   slow_min2_400 = (((parseInt(slow_min2) * 60) + parseInt(slow_sec2)) / 1000) * 400;		 	 
+         }  else if (runOpt === 'oth'){
+           target_min = parseInt( count / oth);
+           target_sec = (((count / oth) - target_min) * 60) / 100 ;
+           target_sec = parseFloat(target_sec).toFixed(2);
+	   target_sec = target_sec.toString();
+           target_sec = target_sec.replace("0.","");
+           target_min_400 = (((parseInt(target_min) * 60) + parseInt(target_sec)) / 1000) * 400;
+
+           fast_min = parseInt( (count * 0.97) / oth);
+           fast_sec = ((((count * 0.97) / oth) - fast_min) * 60) / 100 ;
+           fast_sec = parseFloat(fast_sec).toFixed(2);
+	   fast_sec = fast_sec.toString();
+           fast_sec = fast_sec.replace("0.","");
+	   fast_min_400 = (((parseInt(fast_min) * 60) + parseInt(fast_sec)) / 1000) * 400;	 
+
+           slow_min = parseInt( (count * 1.1) / oth);
+           slow_sec = ((((count * 1.1)/ oth) - slow_min) * 60) / 100 ;
+           slow_sec = parseFloat(slow_sec).toFixed(2);
+	   slow_sec = slow_sec.toString();
+           slow_sec = slow_sec.replace("0.","");
+           slow_min_400 = (((parseInt(slow_min) * 60) + parseInt(slow_sec)) / 1000) * 400;		 
+
+           slow_min2 = parseInt( (count * 1.15) / oth);
+           slow_sec2 = ((((count * 1.15)/ oth) - slow_min2) * 60) / 100 ;
            slow_sec2 = parseFloat(slow_sec2).toFixed(2);
 	   slow_sec2 = slow_sec2.toString();
            slow_sec2 = slow_sec2.replace("0.","");
@@ -368,7 +416,7 @@ function handleClick(myRadio) {
 
          var time = '';
   
-         if (target_min >= 1 ) {
+         if (target_min >= 1 || true ) {
             //time = target_min + "分" + target_sec + "秒";
 	    time = (((parseInt(target_min) * 60) + parseInt(target_sec)));
             $('#msg1').html(new Date(time * 1000).toISOString().substr(14, 5));	             
@@ -391,12 +439,21 @@ function handleClick(myRadio) {
 
             $('#msg7').html(new Date(slow_min_400 * 1000).toISOString().substr(14, 5));
 
-            $('#msg8').html(new Date(slow_min2_400 * 1000).toISOString().substr(14, 5));		 		 
+            $('#msg8').html(new Date(slow_min2_400 * 1000).toISOString().substr(14, 5));
+			
+			var m200 = target_min_400 / 2;
+			
+			$('#msg9').html(new Date(m200 * 1000).toISOString().substr(14, 5));			
+			
+			$('#msg10').html(new Date((target_min_400 * 2) * 1000).toISOString().substr(14, 5));			
+			
+			$('#msg11').html(new Date((target_min_400 * 2 + m200) * 1000).toISOString().substr(14, 5));			
             return;
          }
 
 
          var full_hour=0;
+		 var half_hour=0;
          if (count > 120){
            var second = full_hour % 60;
          } else {
@@ -428,7 +485,21 @@ function handleClick(myRadio) {
     $("button:#Reset").click(function () {
 		
 	$('#msg').html("");
-	$('input:textbox').val("");
+	$('#msg1').html("");
+	$('#msg2').html("");
+	$('#msg3').html("");
+	$('#msg4').html("");
+	$('#msg5').html("");
+	$('#msg6').html("");
+	$('#msg7').html("");
+	$('#msg8').html("");
+	$('#msg9').html("");
+	$('#msg10').html("");
+	$('#msg11').html("");
+	// $('input:textbox').val("");
+	$("#radioFull").click();
+	// document.getElementById("estTimeHH").value = ''
+	// document.getElementById("estTimeMM").value = ''
 		
     });
 	
