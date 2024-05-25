@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html>
+<title>
+Calculate Player running time
+</title>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script> -->
+</head>
+</script>	
+<script type="text/javascript">
+function showHint(str)
+{
+var xmlhttp;
+
+        if (window.XMLHttpRequest)
+          {// code for IE7+, Firefox, Chrome, Opera, Safari
+          xmlhttp=new XMLHttpRequest();
+          }
+        else
+          {// code for IE6, IE5
+          xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+          }
+        xmlhttp.onreadystatechange=function()
+          {
+                  if (xmlhttp.readyState==4 && xmlhttp.status==200)      
+                  {
+                        var result=xmlhttp.responseText;
+                        var html = result;
+                      /*    
+                        var obj = JSON.parse(result);//解析json字串為json物件形式
+                                                
+                        var html = '<table border=1 width=100%>';//
+                        
+                        for (var i = 0; i < obj.length; i ++ ) {//
+                                html  += '<tr>';//
+                                for(j=0;j<obj[i].data.length;j++)
+                                {
+                                  html+= '<td>'+obj[i].data[j]+'</td>'; 
+                                }
+                                html  += '</tr>';            
+                        }
+                        html+="</table>";
+                      */  
+                        //document.getElementById("playerList").innerHTML="跑友名稱 : " + html
+			document.getElementById("playerSelect").innerHTML="選擇跑友名稱 : " + dynamicDropdownList(html);
+                        if(html.length==0) //只有一筆代表查不到資料
+                                alert('查無資料');
+                  }
+
+          }
+    //var url="https://script.google.com/macros/s/AKfycbwgW-Luy9vwtDohR7qD91Uq_atyW3GPlthO4-lPPpGUoDjU7uLhmKtUCuPZWpj8twTp/exec";
+    //var url="https://script.google.com/macros/s/AKfycbxEJPAjgOd9anMf-vz8DnWG9RFEx07N-dA9NmiFyiCJ3aAaVw5lKPrnDf1lj4s-A-A/exec";
+    var url="https://script.google.com/macros/s/AKfycbzeeQ9NX3yY4Pc7eHEfXmtZ-x0ym2n3FAcgeelr8mHjoFXKXDaZw0NOnH3LcoCscWc/exec";
+        //xmlhttp.open("get",url+"?uid="+encodeURIComponent(str),true);
+        xmlhttp.open("get",url,true);
+        xmlhttp.send();
+}
+</script>
+<body onload="showHint(11)">
+
+
+<center>
+
+ 
+
+
+
+<h1>參考(10K 0:39, Half 1:29, Full 2:59)</h1>
+<div style="padding:3px;">
+預計完成時間 : 
+	<input type="textbox" size="3" value="2" onkeypress="return checkNumber(event)" id="estTimeHH" placeholder="HH"></input>:
+	<input type="textbox" size="3" value="59" onkeypress="return checkNumber(event)" id="estTimeMM" placeholder="MM"></input>	
+	<input type="textbox" size="3" value="00" onkeypress="return checkNumber(event)" id="estTimeSS" placeholder="SS"></input>	
+	<br>
+<input type="radio" id="radioFull" value="full" name="group" checked onclick="handleClick(this);">全馬
+<input type="radio" id="radioHalf" value="half" name="group" onclick="handleClick(this);">半馬
+<input type="radio" id="radio10K" value="10K" name="group" onclick="handleClick(this);">10K
+<br>
+<input type="radio" id="radio10K" value="oth" name="group" onclick="handleClick(this);">Other
+<input type="textbox" size="3" value="5000" onkeypress="return checkNumber(event)" id="estTimeKm"></input>m
+<br>
+<button id="Get">Calcuate</button> 
+<button id="Reset">Reset It</button>
+<button id="Copy" onclick="CopyToClipboard('div1')">Copy It</button>
+
+<br>
+<br>
+預計配速時間 : 	
+	<input type="textbox" size="3" value="4" onkeypress="return checkNumber(event)" id="estTimeMM1" placeholder="MM"></input>	
+	<input type="textbox" size="3" value="15" onkeypress="return checkNumber(event)" id="estTimeSS1" placeholder="SS"></input>	
+<br>
+</div>
+<span id="playerList"></span><br>
+<span id="playerSelect"></span>	
+
+
+<button id="Get1">Calcuate pace</button>
+
+<div id="div1">
+<h2>配速 : <label id="msg1"></label></h2>
+<h2>快*<input type="textbox" size="3" value="0.97" onkeypress="return checkNumber(event)" onblur="estFunc('fast')" id="estFast" placeholder="0.97"></input>: <label id="msg2"></label></h2>
+<h2>慢*1.1: <label id="msg3"></label></h2>
+<h2>慢*<input type="textbox" size="3" value="1.15" onkeypress="return checkNumber(event)" onblur="estFunc('slow')" id="estSlow" placeholder="1.15"></input>: <label id="msg4"></label></h2>	
+<h2>400M: <label id="msg5"></label></h2>	
+<h2>400M快*<span id="estFastS">0.97</span>: <label id="msg6"></label></h2>	
+<h2>400M慢*1.1: <label id="msg7"></label></h2>	
+<h2>400M慢*<span id="estSlowS">1.15</span>: <label id="msg8"></label></h2>		
+<h2>200M: <label id="msg9"></label></h2>	
+<h2>800M: <label id="msg10"></label></h2>	
+<h2>1000M: <label id="msg11"></label></h2>	
+<h2>10KM: <label id="msg12"></label></h2>	
+</div>
+	
+
+
+
+
+</body>
+
+
+
+
+
+<script language="javascript" type="text/javascript">
+function formattingTime() {
+    var count = 0; //document.getElementById('kmh').value;
+    var time = '';
+    var second = count % 60;
+    var minute = parseInt(parseInt(count) / 60) % 60;
+    time = second + "秒";
+     if (minute >= 1 ) {
+       time = minute + "分" + second + "秒";
+     }
+     var hour = parseInt( parseInt(parseInt(count/60)/60)%24);
+     if (hour >= 1) {
+       time = hour + "小時" + minute + "分" + second + "秒";
+     } else {
+       time = minute + "分" + second + "秒";
+     }
+     var day = parseInt( parseInt(parseInt(count/60)/60)/24);
+     if (day >= 1) {
+       time = day + "天" + hour + "小時" + minute + "分" + second + "秒";
+     }
+   return time;
+}
+
+function checkNumber(event) {
+
+var aCode = event.which ? event.which : event.keyCode;
+//alert(aCode);
+
+if (aCode == 46) return true;
+
+if (aCode > 31 && (aCode < 48 || aCode > 58)) return false;
+
+return true;
+
+}
+
+	
+//This method calls on button click
+function dynamicDropdownList(source){
+    var myArray = source.split(",");
+    var dropdownHTML = '<select id="combo" onchange="getCombo(this)">';
+    var firstRunner="";
+    var firstEstTime="";
+    var firstOption="";
+    for(var i=0;i<myArray.length;i++){
+        var value = myArray[i];   
+        var minValue = value.split("#");     
+        if (firstRunner.length == 0){
+           firstRunner = minValue[0];
+        }
+        if (firstEstTime.length == 0){
+           firstEstTime = minValue[2];
+        }
+        if (firstOption.length == 0){
+           firstOption = minValue[1];
+        }
+        if (typeof(minValue[2]) != 'undefined') {
+           document.getElementById("estTime").value=minValue[2];
+           dropdownHTML+='<option value="'+minValue[0]+'#'+minValue[1]+'#'+minValue[2]+'">'+minValue[0]+'  Time:'+minValue[2]+'</option>';
+	} else {
+           document.getElementById("estTime").value="";
+           dropdownHTML+='<option value="'+minValue[1]+'#'+minValue[2]+'">'+minValue[0]+'  Time:</option>';
+        }
+        if (minValue[1] === 'FULL') {
+           document.getElementById("radioFull").checked = true;
+        }
+        if (minValue[1] === 'HALF') {
+           document.getElementById("radioHalf").checked = true;
+        }
+        if (minValue[1] === '10K') {
+           document.getElementById("radio10K").checked = true;
+        }        
+    }
+    dropdownHTML+='</select>';        
+    //Load the dynamically created dropdown in container
+    //var container=document.getElementById("dropdown-container");
+
+    $('#msg0').html(firstRunner);	             
+    if (firstOption === 'FULL') {
+       document.getElementById("radioFull").checked = true;
+    }
+    if (firstOption === 'HALF') {
+       document.getElementById("radioHalf").checked = true;
+    }
+    if (firstOption === '10K') {
+       document.getElementById("radio10K").checked = true;
+    } 
+    document.getElementById("estTime").value=firstEstTime;
+    return dropdownHTML;
+}	
+
+function getCombo(selectObject) {
+  var value = selectObject.value.split("#");  
+  document.getElementById("estTime").value=value[2];
+  $('#msg0').html(value[0]);	             
+  if (value[1] === 'FULL') {
+     document.getElementById("radioFull").checked = true;
+  }
+  if (value[1] === 'HALF') {
+     document.getElementById("radioHalf").checked = true;
+  }
+  if (value[1] === '10K') {
+     document.getElementById("radio10K").checked = true;
+  }        
+  console.log(value);
+}
+	
+function convertH2M(timeInHour,timeInMin,timeInSec){
+  // var timeParts = timeInHour.split(":");
+  // return Number(timeParts[0]) * 60 + Number(timeParts[1]);
+  return Number(timeInHour) * 60 + Number(timeInMin);
+}
+
+function convertH2M1(timeInMin,timeInSec){
+  // var timeParts = timeInHour.split(":");
+  // return Number(timeParts[0]) * 60 + Number(timeParts[1]);
+  return Number(timeInMin * 60) + Number(timeInSec);
+}
+
+	
+function CopyToClipboard(containerid) {
+  if (document.selection) {
+    var range = document.body.createTextRange();
+    range.moveToElementText(document.getElementById(containerid));
+    range.select().createTextRange();
+    document.execCommand("copy"); 
+    alert("成功複製");
+  } else if (window.getSelection) {
+    var range = document.createRange();
+    range.selectNode(document.getElementById(containerid));
+    window.getSelection().addRange(range);
+    document.execCommand("copy");
+    alert("成功複製");
+  }
+}
+
+function handleClick(myRadio) {
+    //alert('New value: ' + myRadio.value);
+    var runOpt = document.querySelector('input[name="group"]:checked').value;
+	runOpt = runOpt.toUpperCase();
+    if (runOpt === 'HALF'){
+       document.getElementById("estTimeHH").value="1";
+	   document.getElementById("estTimeMM").value="29";
+	   document.getElementById("estTimeSS").value="00";
+    } else if (runOpt === 'FULL'){
+       document.getElementById("estTimeHH").value="2";
+	   document.getElementById("estTimeMM").value="59";
+	   document.getElementById("estTimeSS").value="00";
+    } else if (runOpt === '10K'){
+       document.getElementById("estTimeHH").value="0";
+	   document.getElementById("estTimeMM").value="39";
+    } else if (runOpt === 'OTH'){
+       document.getElementById("estTimeHH").value="0";
+	   document.getElementById("estTimeMM").value="19";
+	   document.getElementById("estTimeSS").value="00";
+    }   
+}
+
+function estFunc(x) {
+  if (x == 'fast') {     
+     document.getElementById('estFastS').innerHTML = document.getElementById("estFast").value; 
+  } else if (x == 'slow') {     
+     document.getElementById('estSlowS').innerHTML = document.getElementById("estSlow").value; 
+  }
+  
+  
+}
+
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        var kmh = $('kmh');
+        var kk = $('#kk');
+        kk.click(function() {
+            alert(kmh.val());
+            document.getElementById("demo").innerHTML = kmh.val();
+        });
+    });
+</script>
+
+
+
+<script type="text/javascript">
+    $("button:#Get").click(function () {
+	 var runOpt = document.querySelector('input[name="group"]:checked').value;	
+         // var count = convertH2M($('input:textbox').val());
+		 var count = convertH2M(document.getElementById("estTimeHH").value,document.getElementById("estTimeMM").value,document.getElementById("estTimeSS").value);
+		 
+		 var ttl_second = 0;
+		 var ttl_long = 0;
+		 var ttl_min = 0;
+	     var ttl_ss = 0;
+		 
+		 var targetSS = parseInt(document.getElementById("estTimeSS").value);
+		 
+         var half = 21.0975;
+         var full = 42.195;
+		 var k10 = 10;
+		 var oth = document.getElementById("estTimeKm").value / 1000;
+		 
+		 var estFast = parseFloat(document.getElementById("estFast").value);
+		 var estSlow = parseFloat(document.getElementById("estSlow").value);
+
+         var target_min = 0;
+         var target_sec = 0;
+         var target_min_400 = 0;
+         var target_sec_400 = 0;         
+         var fast_min = 0;
+         var fast_sec = 0;
+	 var fast_min_400 = 0;   
+         var slow_min = 0;
+         var slow_sec = 0;
+	 var slow_min_400 = 0;   
+         var slow_min2 = 0;
+         var slow_sec2 = 0;	    
+	 var slow_min2_400 = 0;   
+         if (runOpt === 'half'){
+            ttl_second = parseInt((count * 60) + targetSS);
+			ttl_long = ttl_second / half;
+			target_min = parseInt(ttl_long / 60);
+			target_sec = parseInt(ttl_long % 60);
+			target_min_400 = (((parseInt(target_min) * 60) + parseInt(target_sec)) / 1000) * 400;			
+		    
+		    ttl_second = parseInt((((count) * 60) + targetSS) * estFast);
+			ttl_long = ttl_second / half;
+			fast_min = parseInt(ttl_long / 60);
+			fast_sec = parseInt(ttl_long % 60);
+			fast_min_400 = (((parseInt(fast_min) * 60) + parseInt(fast_sec)) / 1000) * 400;	 
+			
+		    ttl_second = parseInt((((count) * 60) + targetSS) * 1.1);
+			ttl_long = ttl_second / half;
+			slow_min = parseInt(ttl_long / 60);
+			slow_sec = parseInt(ttl_long % 60);			
+			slow_min_400 = (((parseInt(slow_min) * 60) + parseInt(slow_sec)) / 1000) * 400;		 	 
+	   
+	   		ttl_second = parseInt((((count) * 60) + targetSS) * estSlow);
+			ttl_long = ttl_second / half;
+			slow_min2 = parseInt(ttl_long / 60);
+			slow_sec2 = parseInt(ttl_long % 60);				
+			slow_min2_400 = (((parseInt(slow_min2) * 60) + parseInt(slow_sec2)) / 1000) * 400;		 
+
+         } else if (runOpt === 'full'){
+            ttl_second = parseInt((count * 60) + targetSS);
+			ttl_long = ttl_second / full;
+			target_min = parseInt(ttl_long / 60);
+			target_sec = parseInt(ttl_long % 60);
+			target_min_400 = (((parseInt(target_min) * 60) + parseInt(target_sec)) / 1000) * 400;			
+		    
+		    ttl_second = parseInt((((count) * 60) + targetSS) * estFast);
+			ttl_long = ttl_second / full;
+			fast_min = parseInt(ttl_long / 60);
+			fast_sec = parseInt(ttl_long % 60);
+			fast_min_400 = (((parseInt(fast_min) * 60) + parseInt(fast_sec)) / 1000) * 400;	 
+			
+		    ttl_second = parseInt((((count) * 60) + targetSS) * 1.1);
+			ttl_long = ttl_second / full;
+			slow_min = parseInt(ttl_long / 60);
+			slow_sec = parseInt(ttl_long % 60);			
+			slow_min_400 = (((parseInt(slow_min) * 60) + parseInt(slow_sec)) / 1000) * 400;		 	 
+	   
+	   		ttl_second = parseInt((((count) * 60) + targetSS) * estSlow);
+			ttl_long = ttl_second / full;
+			slow_min2 = parseInt(ttl_long / 60);
+			slow_sec2 = parseInt(ttl_long % 60);				
+			slow_min2_400 = (((parseInt(slow_min2) * 60) + parseInt(slow_sec2)) / 1000) * 400;		  	 
+         }  else if (runOpt === '10K'){
+           	ttl_second = parseInt((count * 60) + targetSS);
+			ttl_long = ttl_second / k10;
+			target_min = parseInt(ttl_long / 60);
+			target_sec = parseInt(ttl_long % 60);
+			target_min_400 = (((parseInt(target_min) * 60) + parseInt(target_sec)) / 1000) * 400;			
+		    
+		    ttl_second = parseInt((((count) * 60) + targetSS) * estFast);
+			ttl_long = ttl_second / k10;
+			fast_min = parseInt(ttl_long / 60);
+			fast_sec = parseInt(ttl_long % 60);
+			fast_min_400 = (((parseInt(fast_min) * 60) + parseInt(fast_sec)) / 1000) * 400;	 
+			
+		    ttl_second = parseInt((((count) * 60) + targetSS) * 1.1);
+			ttl_long = ttl_second / k10;
+			slow_min = parseInt(ttl_long / 60);
+			slow_sec = parseInt(ttl_long % 60);			
+			slow_min_400 = (((parseInt(slow_min) * 60) + parseInt(slow_sec)) / 1000) * 400;		 	 
+	   
+	   		ttl_second = parseInt((((count) * 60) + targetSS) * estSlow);
+			ttl_long = ttl_second / k10;
+			slow_min2 = parseInt(ttl_long / 60);
+			slow_sec2 = parseInt(ttl_long % 60);				
+			slow_min2_400 = (((parseInt(slow_min2) * 60) + parseInt(slow_sec2)) / 1000) * 400;		 
+	   
+         }  else if (runOpt === 'oth'){
+		    
+			ttl_second = parseInt((count * 60) + targetSS);
+			ttl_long = ttl_second / oth;
+			target_min = parseInt(ttl_long / 60);
+			target_sec = parseInt(ttl_long % 60);
+			target_min_400 = (((parseInt(target_min) * 60) + parseInt(target_sec)) / 1000) * 400;			
+		    
+		    ttl_second = parseInt((((count) * 60) + targetSS) * estFast);
+			ttl_long = ttl_second / oth;
+			fast_min = parseInt(ttl_long / 60);
+			fast_sec = parseInt(ttl_long % 60);
+			fast_min_400 = (((parseInt(fast_min) * 60) + parseInt(fast_sec)) / 1000) * 400;	 
+			
+		    ttl_second = parseInt((((count) * 60) + targetSS) * 1.1);
+			ttl_long = ttl_second / oth;
+			slow_min = parseInt(ttl_long / 60);
+			slow_sec = parseInt(ttl_long % 60);			
+			slow_min_400 = (((parseInt(slow_min) * 60) + parseInt(slow_sec)) / 1000) * 400;		 
+		    
+		    ttl_second = parseInt((((count) * 60) + targetSS) * estSlow);
+			ttl_long = ttl_second / oth;
+			slow_min2 = parseInt(ttl_long / 60);
+			slow_sec2 = parseInt(ttl_long % 60);				
+			slow_min2_400 = (((parseInt(slow_min2) * 60) + parseInt(slow_sec2)) / 1000) * 400;		 	 
+		 		
+		 	 
+         }
+
+
+         var time = '';
+  
+         if (target_min >= 1 || true ) {
+            //time = target_min + "分" + target_sec + "秒";
+	    time = (((parseInt(target_min) * 60) + parseInt(target_sec)));
+            $('#msg1').html(new Date(time * 1000).toISOString().substr(14, 5));	             
+	    time = "";	 
+            //time = fast_min + "分" + fast_sec + "秒";
+            time = (((parseInt(fast_min) * 60) + parseInt(fast_sec)));
+	    $('#msg2').html(new Date(time * 1000).toISOString().substr(14, 5));	             
+            time = "";
+            //time = slow_min + "分" + slow_sec + "秒";
+	    time = (((parseInt(slow_min) * 60) + parseInt(slow_sec)));	 
+            $('#msg3').html(new Date(time * 1000).toISOString().substr(14, 5));	             
+	    time = "";	 
+            //time = slow_min2 + "分" + slow_sec2 + "秒";
+	    time = (((parseInt(slow_min2) * 60) + parseInt(slow_sec2)));	 	 
+            $('#msg4').html(new Date(time * 1000).toISOString().substr(14, 5));	             
+
+            $('#msg5').html(new Date(target_min_400 * 1000).toISOString().substr(14, 5));
+
+            $('#msg6').html(new Date(fast_min_400 * 1000).toISOString().substr(14, 5));
+
+            $('#msg7').html(new Date(slow_min_400 * 1000).toISOString().substr(14, 5));
+
+            $('#msg8').html(new Date(slow_min2_400 * 1000).toISOString().substr(14, 5));
+			
+			var m200 = target_min_400 / 2;
+			
+			$('#msg9').html(new Date(m200 * 1000).toISOString().substr(14, 5));			
+			
+			$('#msg10').html(new Date((target_min_400 * 2) * 1000).toISOString().substr(14, 5));			
+			
+			$('#msg11').html(new Date((target_min_400 * 2 + m200) * 1000).toISOString().substr(14, 5));			
+            return;
+         }
+
+
+         var full_hour=0;
+		 var half_hour=0;
+         if (count > 120){
+           var second = full_hour % 60;
+         } else {
+           var second = half_hour % 60;
+         }
+         
+         var minute = parseInt(parseInt(count) / 60) % 60;
+         time = second + "秒";
+          if (minute >= 1 ) {
+            time = minute + "分" + second + "秒";
+          }
+          var hour = parseInt( parseInt(parseInt(count/60)/60)%24);
+          if (hour >= 1) {
+            time = hour + "小時" + minute + "分" + second + "秒";
+          } else {
+            time = 0 + "小時" + minute + "分" + second + "秒";
+          }
+          var day = parseInt( parseInt(parseInt(count/60)/60)/24);
+          if (day >= 1) {
+            time = day + "天" + hour + "小時" + minute + "分" + second + "秒";
+          }
+
+
+//	$('#msg').html($('input:textbox').val());
+	$('#msg').html(time);
+		
+    });
+	
+    $("button:#Get1").click(function () {	     
+         // var count = convertH2M($('input:textbox').val());
+		 var count = convertH2M1(document.getElementById("estTimeMM1").value,document.getElementById("estTimeSS1").value);
+		 
+		 var ttl_second = 0;
+		 var ttl_long = 0;
+		 var ttl_min = 0;
+	     var ttl_ss = 0;
+		 
+		 var targetSS = parseInt(document.getElementById("estTimeSS").value);
+		 
+         var half = 21.0975;
+         var full = 42.195;
+		 var k10 = 10;
+		 var oth = document.getElementById("estTimeKm").value / 1000;
+
+         var target_200 = 0;
+         var target_400 = 0;
+         var target_800 = 0;
+         var target_1000 = 0;         
+		 var target_2000 = 0;         
+		 var target_5000 = 0;         
+		 var target_10000 = 0;         
+         
+         
+		    
+			ttl_second = count;
+			target_200 = ttl_second / 5;   //200m
+			target_400 = target_200 * 2;
+			target_800 = target_200 * 4;
+			target_1000 = target_200 * 5
+			
+		 	
+         
+
+
+         var time = '';
+  
+
+
+			
+			
+			
+			$('#msg9').html(new Date(target_200 * 1000).toISOString().substr(14, 5));			
+			
+			$('#msg10').html(new Date((target_400 * 2) * 1000).toISOString().substr(14, 5));			
+			
+			$('#msg11').html(new Date((target_400 * 2 + target_200) * 1000).toISOString().substr(14, 5));			
+			
+			$('#msg12').html(new Date((target_1000 * 10) * 1000).toISOString().substr(14, 5));			
+            return;
+         
+
+
+         var full_hour=0;
+		 var half_hour=0;
+         if (count > 120){
+           var second = full_hour % 60;
+         } else {
+           var second = half_hour % 60;
+         }
+         
+         var minute = parseInt(parseInt(count) / 60) % 60;
+         time = second + "秒";
+          if (minute >= 1 ) {
+            time = minute + "分" + second + "秒";
+          }
+          var hour = parseInt( parseInt(parseInt(count/60)/60)%24);
+          if (hour >= 1) {
+            time = hour + "小時" + minute + "分" + second + "秒";
+          } else {
+            time = 0 + "小時" + minute + "分" + second + "秒";
+          }
+          var day = parseInt( parseInt(parseInt(count/60)/60)/24);
+          if (day >= 1) {
+            time = day + "天" + hour + "小時" + minute + "分" + second + "秒";
+          }
+
+
+//	$('#msg').html($('input:textbox').val());
+	$('#msg').html(time);
+		
+    });	
+	
+    $("button:#Reset").click(function () {
+		
+	$('#msg').html("");
+	$('#msg1').html("");
+	$('#msg2').html("");
+	$('#msg3').html("");
+	$('#msg4').html("");
+	$('#msg5').html("");
+	$('#msg6').html("");
+	$('#msg7').html("");
+	$('#msg8').html("");
+	$('#msg9').html("");
+	$('#msg10').html("");
+	$('#msg11').html("");
+	$('#msg12').html("");
+	// $('input:textbox').val("");
+	$("#radioFull").click();
+	document.getElementById("estFast").value = '0.97'
+	document.getElementById("estSlow").value = '1.15'
+	// document.getElementById("estTimeHH").value = ''
+	// document.getElementById("estTimeMM").value = ''
+		
+    });
+	
+    $("button:#Set").click(function () {
+		
+	$('input:textbox').val("ABC");
+	$('#msg').html($('input:textbox').val());
+		
+    });
+	
+</script>
+
+</html>
+
+
